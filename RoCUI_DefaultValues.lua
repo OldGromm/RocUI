@@ -11,7 +11,7 @@ RoCUI_Table_Options_Y_Max = {}
 
 
 RoCUI_Table_Options_Default_Width["main"] = 2048
-RoCUI_Table_Options_Default_Width["sun"] = 2048 --256
+RoCUI_Table_Options_Default_Width["sun"] = 2048
 RoCUI_Table_Options_Default_Width["additional1"] = 256
 RoCUI_Table_Options_Default_Width["additional2"] = 256
 RoCUI_Table_Options_Default_Width["additional3"] = 256
@@ -19,7 +19,7 @@ RoCUI_Table_Options_Default_Width["additional4"] = 256
 
 
 RoCUI_Table_Options_Default_Height["main"] = 512
-RoCUI_Table_Options_Default_Height["sun"] = 128 --128
+RoCUI_Table_Options_Default_Height["sun"] = 128
 RoCUI_Table_Options_Default_Height["additional1"] = 256
 RoCUI_Table_Options_Default_Height["additional2"] = 256
 RoCUI_Table_Options_Default_Height["additional3"] = 256
@@ -76,4 +76,5 @@ RoCUI_Table_Options_Y_Max["sun"] = 700
 RoCUI_Table_Options_Y_Max["additional1"] = 1000
 RoCUI_Table_Options_Y_Max["additional2"] = 1000
 RoCUI_Table_Options_Y_Max["additional3"] = 1000
+
 RoCUI_Table_Options_Y_Max["additional4"] = 1000
