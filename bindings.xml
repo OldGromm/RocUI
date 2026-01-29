@@ -1,0 +1,5 @@
+<Bindings>
+    <Binding name="Toggle UI Display" category="RoC UI">
+        RoCUI_ToggleDisplay_Binding()
+    </Binding>
+</Bindings>
