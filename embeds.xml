@@ -5,14 +5,19 @@
 <Script file="libraries\LibStub\LibStub.lua"/>
 <Script file="libraries\CallbackHandler-1.0\CallbackHandler-1.0.lua"/>
 <Script file="libraries\LibDataBroker-1.1\LibDataBroker-1.1.lua"/>
+<Include file="RoCUI_CustomStyles.xml"/>
 <Script file="RoCUI_Initialization.lua"/>
 <Script file="RoCUI_BackdropInfos.lua"/>
+<Script file="RoCUI_TopMenues.lua"/>
 <Script file="RoCUI_DefaultValues.lua"/>
 <Script file="RoCUI_Functions.lua"/>
 <Script file="RoCUI_CreateFrames.lua"/>
+<Script file="RoCUI_StatsFrame.lua"/>
 <Script file="RoCUI_TimeOfDay.lua"/>
 <Script file="RoCUI_MinimapButton.lua"/>
+<Script file="RoCUI_SoundOverrides.lua"/>
 <Script file="RoCUI_Options.lua"/>
 <Script file="RoCUI_Other.lua"/>
 <Script file="RoCUI_LoadSettings.lua"/>
+
 </Ui>

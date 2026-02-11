@@ -11,10 +11,11 @@ end
 
 
 
+
 -- Compartment
 AddonCompartmentFrame:RegisterAddon({
     text = RoCUI_Text_Options_Compartment_Title,
-    icon = "Interface\\Addons\\RoCUI\\images\\other\\RoCUI_icon.blp",
+    icon = "Interface\\Addons\\RoCUI\\images\\other\\RoCUI_Icon.blp",
     notCheckable = true,
     func = function(button, menuInputData, menu)
     local buttonName = menuInputData.buttonName;
@@ -31,9 +32,28 @@ AddonCompartmentFrame:RegisterAddon({
 })
 
 
+
+
 -- Slash command
-SLASH_RoCUI1 = "/RoCUI"
-SLASH_RoCUI2 = "/reignofchaosui"
-SlashCmdList.RoCUI = function()
+SLASH_ROCUI1 = "/RoCUI"
+SLASH_ROCUI2 = "/reignofchaosui"
+SlashCmdList.ROCUI = function()
     RoCUI_OpenSettingsMenu()
+end
+
+
+
+
+-- Warcraft III easter egg
+RoCUI_EasterEggSoundisPlaying = false
+RoCUI_EasterEggSoundHandle = ""
+SLASH_WC3CHEAT1 = "/TenthLevelTaurenChieftain"
+SlashCmdList.WC3CHEAT = function()
+    if RoCUI_EasterEggSoundisPlaying == false then
+        willPlay, RoCUI_EasterEggSoundHandle = PlaySoundFile(53438, "Talking Head")
+	    RoCUI_EasterEggSoundisPlaying = true
+	else
+	    StopSound(RoCUI_EasterEggSoundHandle, 2500)
+	    RoCUI_EasterEggSoundisPlaying = false
+	end
 end

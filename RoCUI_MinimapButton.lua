@@ -6,7 +6,7 @@ local RoCUI_DBIcon = LibStub("LibDBIcon-1.0")
 
 local RoCUI_LDB = LibStub("LibDataBroker-1.1"):NewDataObject("RoCUI_Minimap", {  
 	type = "data source",
-	icon = "Interface\\Addons\\RoCUI\\images\\other\\RoCUI_icon.blp",
+	icon = "Interface\\Addons\\RoCUI\\images\\other\\RoCUI_Icon.blp",
 	OnClick = function() RoCUI_OpenSettingsMenu() end,
     OnTooltipShow = function(tip)
     tip:AddLine(RoCUI_Text_Options_Compartment_Title, 1, 1, 1)

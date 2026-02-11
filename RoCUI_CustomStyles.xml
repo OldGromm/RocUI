@@ -1,0 +1,124 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\Blizzard_SharedXML\UI.xsd">
+
+    <FontFamily name="RoCUIFontSize20" virtual="true">
+      <Member alphabet="roman">
+        <Font font="Fonts\FRIZQT__.ttf" height="20">
+        </Font>
+      </Member>
+      <Member alphabet="korean">
+        <Font font="Fonts\K_Pagetext.ttf" height="20">
+        </Font>
+      </Member>
+      <Member alphabet="simplifiedchinese">
+        <Font font="Fonts\ARKai_T.ttf" height="20">
+        </Font>
+      </Member>
+      <Member alphabet="traditionalchinese">
+        <Font font="Fonts\blei00d.ttf" height="20">
+        </Font>
+      </Member>
+      <Member alphabet="russian">
+        <Font font="Fonts\MORPHEUS_CYR.ttf" height="20">
+        </Font>
+      </Member>
+    </FontFamily>
+
+	<Font name="RoCUIFontNormal" inherits="RoCUIFontSize20" virtual="true">
+		<Color r="1" g="1" b="1"/>
+	</Font>
+
+	<Font name="RoCUIFontHighlight" inherits="RoCUIFontNormal" virtual="true">
+		<Color r="0.6" g="0.6" b="0.6"/>
+	</Font>
+
+	<Font name="RoCUIFontDisable" inherits="RoCUIFontNormal" virtual="true">
+		<Color r="0.6" g="0.6" b="0.6"/>
+	</Font>
+	
+	<Button name="RoCUIButtonNoTooltipTemplate" mixin="UIButtonFitToTextBehaviorMixin" virtual="true">
+		<KeyValues>
+			<KeyValue key="fitTextCanWidthDecrease" value="true" type="boolean"/>
+			<KeyValue key="fitTextWidthPadding" value="30" type="number"/>
+		</KeyValues>
+		<Size x="30" y="22"/>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="Left" file="Interface\Buttons\UI-Panel-Button-Up">
+					<Size x="12" y="22"/>
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+						<Anchor point="BOTTOMLEFT"/>
+					</Anchors>
+					<TexCoords left="0" right="0.09375" top="0" bottom="0.6875"/>
+				</Texture>
+				<Texture parentKey="Right" file="Interface\Buttons\UI-Panel-Button-Up">
+					<Size x="12" y="22"/>
+					<Anchors>
+						<Anchor point="TOPRIGHT"/>
+						<Anchor point="BOTTOMRIGHT"/>
+					</Anchors>
+					<TexCoords left="0.53125" right="0.625" top="0" bottom="0.6875"/>
+				</Texture>
+				<Texture parentKey="Middle" file="Interface\Buttons\UI-Panel-Button-Up">
+					<Size x="12" y="22"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.Left" relativePoint="TOPRIGHT"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.Right" relativePoint="BOTTOMLEFT"/>
+					</Anchors>
+					<TexCoords left="0.09375" right="0.53125" top="0" bottom="0.6875"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad function="UIPanelButton_OnLoad"/>
+			<OnMouseDown function="UIPanelButton_OnMouseDown"/>
+			<OnMouseUp function="UIPanelButton_OnMouseUp"/>
+			<OnShow function="UIPanelButton_OnShow"/>
+			<OnDisable function="UIPanelButton_OnDisable"/>
+			<OnEnable function="UIPanelButton_OnEnable"/>
+		</Scripts>
+		<ButtonText name="$parentText" parentKey="Text"/>
+		<NormalFont style="RoCUIFontNormal"/>
+		<HighlightFont style="RoCUIFontHighlight"/>
+		<DisabledFont style="RoCUIFontDisable"/>
+	</Button>
+
+	<Button name="RoCUIButtonTemplate" inherits="RoCUIButtonNoTooltipTemplate" mixin="UIPanelButtonMixin" virtual="true">
+		<Scripts>
+			<OnEnter method="OnEnter"/>
+			<OnLeave method="OnLeave"/>
+		</Scripts>
+	</Button>
+	
+    <FontFamily name="RoCUIFontSize13" virtual="true">
+      <Member alphabet="roman">
+        <Font font="Fonts\FRIZQT__.ttf" height="13">
+        </Font>
+      </Member>
+      <Member alphabet="korean">
+        <Font font="Fonts\K_Pagetext.ttf" height="13">
+        </Font>
+      </Member>
+      <Member alphabet="simplifiedchinese">
+        <Font font="Fonts\ARKai_T.ttf" height="13">
+        </Font>
+      </Member>
+      <Member alphabet="traditionalchinese">
+        <Font font="Fonts\blei00d.ttf" height="13">
+        </Font>
+      </Member>
+      <Member alphabet="russian">
+        <Font font="Fonts\MORPHEUS_CYR.ttf" height="13">
+        </Font>
+      </Member>
+    </FontFamily>
+
+	<Font name="RoCUIHealthFont" inherits="RoCUIFontSize13" justifyH="CENTER" virtual="true">
+		<Color r="0" g="1" b="0"/>
+	</Font>
+
+	<Font name="RoCUIManaFont" inherits="RoCUIFontSize13" justifyH="CENTER" virtual="true">
+		<Color r="0.765" g="0.859" b="1"/>
+	</Font>
+</Ui>

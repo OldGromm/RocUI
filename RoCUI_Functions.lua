@@ -53,6 +53,16 @@ return RoCUI_Temp_String_Final
 end
 
 
+-- texture filepaths (button)
+function RoCUI_FetchTextureFilepath_Button(input_frametype)
+    local RoCUI_Temp_FactionSkinID = RoCUIDB_Options["Skin"]
+	local RoCUI_Temp_FactionSkinString = RoCUI_Table_SkinNames[RoCUI_Temp_FactionSkinID]
+    local RoCUI_Temp_String_Final = ("Interface\\AddOns\\RoCUI\\images\\buttons\\"..input_frametype.."\\"..RoCUI_Temp_FactionSkinString)
+	if input_frametype == "disabled" then
+	    RoCUI_Temp_String_Final = ("Interface\\AddOns\\RoCUI\\images\\buttons\\disabled\\disabled")
+	end
+return RoCUI_Temp_String_Final
+end
 
 
 -- options menu
@@ -95,9 +105,15 @@ function RoCUI_Update_FrameDimensions_Width(input_settingsname, input_framename)
 	local RoCUI_Temp_Width_Final = (RoCUI_Temp_Width*RoCUI_Temp_Width_Percentage)
 	_G[RoCUI_Temp_VariableBaseName]:SetWidth(RoCUI_Temp_Width_Final)
 	if input_framename == "sun" then
-        local RoCUI_Temp_SunCycle_Width = 256
-        local RoCUI_Temp_SunCycle_Width_Final = (RoCUI_Temp_SunCycle_Width*RoCUI_Temp_Width_Percentage)
-        _G["RoCUI_CustomFrame_Texture_suncycle"]:SetWidth(RoCUI_Temp_SunCycle_Width_Final)
+        --local RoCUI_Temp_SunCycle_Width = 256
+        --local RoCUI_Temp_SunCycle_Width_Final = (RoCUI_Temp_SunCycle_Width*RoCUI_Temp_Width_Percentage)
+        _G["RoCUI_CustomFrame_Texture_suncycle"]:SetWidth(RoCUI_Temp_Width_Final)
+        _G["RoCUI_CustomFrame_Texture_sunclock"]:SetWidth(RoCUI_Temp_Width_Final)
+	elseif input_framename == "portraitplayer" then
+        local RoCUI_Temp_PortraitPlayer_Width = 200
+        local RoCUI_Temp_PortraitPlayer_Width_Final = (RoCUI_Temp_PortraitPlayer_Width*RoCUI_Temp_Width_Percentage)
+        _G["RoCUI_CustomFrame_Texture_portraitplayerrender"]:SetWidth(RoCUI_Temp_PortraitPlayer_Width_Final)
+		_G["RoCUI_CustomFrame_Texture_portraitplayermask"]:SetWidth(RoCUI_Temp_Width_Final)
 	end
 end
 
@@ -108,9 +124,15 @@ function RoCUI_Update_FrameDimensions_Height(input_settingsname, input_framename
 	local RoCUI_Temp_Height_Final = (RoCUI_Temp_Height*RoCUI_Temp_Height_Percentage)
     _G[RoCUI_Temp_VariableBaseName]:SetHeight(RoCUI_Temp_Height_Final)
 	if input_framename == "sun" then
-        local RoCUI_Temp_SunCycle_Height = 128
-        local RoCUI_Temp_SunCycle_Height_Final = (RoCUI_Temp_SunCycle_Height*RoCUI_Temp_Height_Percentage)
-        _G["RoCUI_CustomFrame_Texture_suncycle"]:SetHeight(RoCUI_Temp_SunCycle_Height_Final)
+        --local RoCUI_Temp_SunCycle_Height = 128
+        --local RoCUI_Temp_SunCycle_Height_Final = (RoCUI_Temp_SunCycle_Height*RoCUI_Temp_Height_Percentage)
+        _G["RoCUI_CustomFrame_Texture_suncycle"]:SetHeight(RoCUI_Temp_Height_Final)
+        _G["RoCUI_CustomFrame_Texture_sunclock"]:SetHeight(RoCUI_Temp_Height_Final)
+	elseif input_framename == "portraitplayer" then
+        local RoCUI_Temp_PortraitPlayer_Height = 200
+        local RoCUI_Temp_PortraitPlayer_Height_Final = (RoCUI_Temp_PortraitPlayer_Height*RoCUI_Temp_Height_Percentage)
+        _G["RoCUI_CustomFrame_Texture_portraitplayerrender"]:SetHeight(RoCUI_Temp_PortraitPlayer_Height_Final)
+		_G["RoCUI_CustomFrame_Texture_portraitplayermask"]:SetHeight(RoCUI_Temp_Height_Final)
 	end
 end
 
@@ -127,6 +149,7 @@ end
 
 
 
+-- show or hide frames
 function RoCUI_ToggleDisplay()
     local RoCUI_Temp_VariableBaseName = ""
 	for i, v in ipairs(RoCUI_Table_Options_Frametypes) do
@@ -153,32 +176,93 @@ function RoCUI_ToggleDisplay_Binding()
 end
 
 
+function RoCUI_ToggleDisplay_Buttons(input_frametype, input_number)
+    local RoCUI_Temp_VariableBaseName = ("RoCUI_CustomFrame_Base_"..input_frametype)
+    if input_number == 20 then
+        _G[RoCUI_Temp_VariableBaseName]:Hide()
+    else
+        _G[RoCUI_Temp_VariableBaseName]:Show()
+    end
+end
+
+
 
 
 -- refresh faction skin textures
-function RoCUI_Update_FactionSkin(input_framename, input_backdrop)
+---- function to check each frame
+function RoCUI_Update_FactionSkin(input_framename, input_texturetype)
     local RoCUI_Temp_VariableBaseName = RoCUI_FetchVariableBaseName(input_framename)
     local RoCUI_Temp_VariableTextureName = RoCUI_FetchVariableTextureName(input_framename)
     local RoCUI_Temp_TextureFilepath = RoCUI_FetchTextureFilepath(input_framename)
-	if input_backdrop == "Backdrop" then
-		_G[RoCUI_Temp_VariableBaseName]:SetBackdrop(RoCUI_CustomBackdrop_Options_Menu_Border)
+	local RoCUI_Temp_Top = ""
+
+	if input_framename == "portraitplayer" then
+        RoCUI_Temp_TextureFilepath = RoCUI_FetchTextureFilepath("portrait")
+	end
+
+	for i=1, 8 do
+	    RoCUI_Temp_Top = ("top"..tostring(i))
+		if input_framename == RoCUI_Temp_Top then
+            RoCUI_Temp_TextureFilepath = RoCUI_FetchTextureFilepath("top")
+	    end
+	end
+	
+
+
+	if input_framename == "inventory" then
+	    if RoCUIDB_Options["Inventory_ToggleSlots"] == true then
+            RoCUI_Temp_TextureFilepath = RoCUI_FetchTextureFilepath("inventory_show")
+		elseif RoCUIDB_Options["Inventory_ToggleSlots"] == false then
+            RoCUI_Temp_TextureFilepath = RoCUI_FetchTextureFilepath("inventory_hide")
+		end
+	end
+
+
+	if input_texturetype == "button" then
+        local RoCUI_ButtonName = RoCUI_FetchVariableBaseName(input_framename)
+	    local RoCUI_ButtonTexture_Normal = RoCUI_FetchTextureFilepath_Button("normal")
+	    local RoCUI_ButtonTexture_Highlight = RoCUI_FetchTextureFilepath_Button("highlight")
+	    local RoCUI_ButtonTexture_Pushed = RoCUI_FetchTextureFilepath_Button("pushed")
+	    local RoCUI_ButtonTexture_Disabled = RoCUI_FetchTextureFilepath_Button("disabled")
+		_G[RoCUI_ButtonName]:SetNormalTexture(RoCUI_ButtonTexture_Normal)
+		_G[RoCUI_ButtonName]:SetHighlightTexture(RoCUI_ButtonTexture_Highlight)
+		_G[RoCUI_ButtonName]:SetPushedTexture(RoCUI_ButtonTexture_Pushed)
+		_G[RoCUI_ButtonName]:SetDisabledTexture(RoCUI_ButtonTexture_Disabled)
+	elseif input_texturetype == "backdrop" then
+	    local RoCUI_Temp_Backdrop = RoCUI_UpdateBackdrop(input_framename)
+		_G[RoCUI_Temp_VariableBaseName]:SetBackdrop(RoCUI_Temp_Backdrop)
     else
         _G[RoCUI_Temp_VariableTextureName]:SetTexture(RoCUI_Temp_TextureFilepath)
 	end
 end
 
 
-
-
--- check all frames
+---- check all frames
 function RoCUI_Update_RefreshFactionSkin()
-    RoCUI_UpdateBackdrop()
     RoCUI_Update_FactionSkin("main", "")
     RoCUI_Update_FactionSkin("sun", "")
-	RoCUI_Update_FactionSkin("additional1", "Backdrop")
-	RoCUI_Update_FactionSkin("additional2", "Backdrop")
-	RoCUI_Update_FactionSkin("additional3", "Backdrop")
-	RoCUI_Update_FactionSkin("additional4", "Backdrop")
+	RoCUI_Update_FactionSkin("portraitplayer", "")
+	RoCUI_Update_FactionSkin("infoplayer", "backdrop")
+	RoCUI_Update_FactionSkin("top1", "")
+	RoCUI_Update_FactionSkin("top2", "")
+	RoCUI_Update_FactionSkin("top3", "")
+	RoCUI_Update_FactionSkin("top4", "")
+	RoCUI_Update_FactionSkin("top5", "")
+	RoCUI_Update_FactionSkin("top6", "")
+	RoCUI_Update_FactionSkin("top7", "")
+	RoCUI_Update_FactionSkin("top8", "")
+	RoCUI_Update_FactionSkin("additional1", "backdrop")
+	RoCUI_Update_FactionSkin("additional2", "backdrop")
+	RoCUI_Update_FactionSkin("additional3", "backdrop")
+	RoCUI_Update_FactionSkin("additional4", "backdrop")
+	for i=1, 8 do
+	    local RoCUI_Temp_Menubutton = ("menubutton"..tostring(i))
+		local RoCUI_Temp_Top = ("top"..tostring(i))
+		local RoCUI_Temp_Options = ("TopMenuChoice_"..RoCUI_Temp_Top)
+		local RoCUI_Temp_Choice = RoCUIDB_Options[RoCUI_Temp_Options]
+	    RoCUI_Update_FactionSkin(RoCUI_Temp_Menubutton, "button")
+		RoCUI_ButtonTextUpdate(RoCUI_Temp_Menubutton, RoCUI_Temp_Choice)
+	end
 end
 
 
