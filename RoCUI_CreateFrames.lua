@@ -138,7 +138,6 @@ end
 
 -- create all frames on start up
 function RoCUI_CreateCustomFramesAfterAddonLoad()
-    print("all loaded")
 	RoCUI_CreateCustomFrame("main", "BOTTOM", "")
     RoCUI_CreateCustomFrame("sun", "TOP", "")
 	RoCUI_CreateCustomFrame("portraitplayer", "CENTER", "")
