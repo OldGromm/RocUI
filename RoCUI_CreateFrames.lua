@@ -117,7 +117,11 @@ function RoCUI_CreateCustomFrame_MenuButton()
         RoCUI_Update_FactionSkin(RoCUI_Temp_FrameType, "button")
 
 	    _G[RoCUI_Temp_ButtonName]:SetScript("OnClick", function(self, button)
-            RoCUI_ButtonReaction(RoCUI_Temp_FrameType_Top)
+            if not PlayerIsInCombat() then
+                RoCUI_ButtonReaction(RoCUI_Temp_FrameType_Top)
+	        else
+	            RoCUI_SendChatMessage(RoCUI_Text_CombatWarning)
+	        end
         end)
 	end
 end
@@ -134,6 +138,7 @@ end
 
 -- create all frames on start up
 function RoCUI_CreateCustomFramesAfterAddonLoad()
+    print("all loaded")
 	RoCUI_CreateCustomFrame("main", "BOTTOM", "")
     RoCUI_CreateCustomFrame("sun", "TOP", "")
 	RoCUI_CreateCustomFrame("portraitplayer", "CENTER", "")

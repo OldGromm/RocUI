@@ -1,6 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\..\Blizzard_SharedXML\UI.xsd">
 
+    <!-- top row buttons -->
+
     <FontFamily name="RoCUIFontSize20" virtual="true">
       <Member alphabet="roman">
         <Font font="Fonts\FRIZQT__.ttf" height="20">
@@ -35,13 +37,13 @@
 	<Font name="RoCUIFontDisable" inherits="RoCUIFontNormal" virtual="true">
 		<Color r="0.6" g="0.6" b="0.6"/>
 	</Font>
-	
+
 	<Button name="RoCUIButtonNoTooltipTemplate" mixin="UIButtonFitToTextBehaviorMixin" virtual="true">
 		<KeyValues>
 			<KeyValue key="fitTextCanWidthDecrease" value="true" type="boolean"/>
-			<KeyValue key="fitTextWidthPadding" value="30" type="number"/>
+			<KeyValue key="fitTextWidthPadding" value="40" type="number"/>
 		</KeyValues>
-		<Size x="30" y="22"/>
+		<Size x="40" y="22"/>
 		<Layers>
 			<Layer level="BACKGROUND">
 				<Texture parentKey="Left" file="Interface\Buttons\UI-Panel-Button-Up">
@@ -90,7 +92,12 @@
 			<OnLeave method="OnLeave"/>
 		</Scripts>
 	</Button>
-	
+
+
+
+
+    <!-- portrait health and mana numbers -->
+
     <FontFamily name="RoCUIFontSize13" virtual="true">
       <Member alphabet="roman">
         <Font font="Fonts\FRIZQT__.ttf" height="13">

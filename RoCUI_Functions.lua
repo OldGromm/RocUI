@@ -2,7 +2,7 @@
 ---- chat messages
 function RoCUI_SendChatMessage(input)
     if not PlayerIsInCombat() then
-	    if RoCUIDB_Options["Addon_Messages"] == true then
+	    if RoCUIDB_Options["General_AddonMessages"] == true then
 	        print(WrapTextInColorCode("RoC UI", "FFE6D30A").." - "..input)
 		end
     end
@@ -46,7 +46,7 @@ end
 
 -- texture filepaths
 function RoCUI_FetchTextureFilepath(input_frametype)
-    local RoCUI_Temp_FactionSkinID = RoCUIDB_Options["Skin"]
+    local RoCUI_Temp_FactionSkinID = RoCUIDB_Options["General_FactionSkin"]
 	local RoCUI_Temp_FactionSkinString = RoCUI_Table_SkinNames[RoCUI_Temp_FactionSkinID]
     local RoCUI_Temp_String_Final = ("Interface\\AddOns\\RoCUI\\images\\"..input_frametype.."\\"..RoCUI_Temp_FactionSkinString)
 return RoCUI_Temp_String_Final
@@ -55,7 +55,7 @@ end
 
 -- texture filepaths (button)
 function RoCUI_FetchTextureFilepath_Button(input_frametype)
-    local RoCUI_Temp_FactionSkinID = RoCUIDB_Options["Skin"]
+    local RoCUI_Temp_FactionSkinID = RoCUIDB_Options["General_FactionSkin"]
 	local RoCUI_Temp_FactionSkinString = RoCUI_Table_SkinNames[RoCUI_Temp_FactionSkinID]
     local RoCUI_Temp_String_Final = ("Interface\\AddOns\\RoCUI\\images\\buttons\\"..input_frametype.."\\"..RoCUI_Temp_FactionSkinString)
 	if input_frametype == "disabled" then
@@ -70,7 +70,7 @@ end
 function RoCUI_Update_FrameVisibility(input_settingsname, input_framename)
     local RoCUI_Temp_VariableBaseName = RoCUI_FetchVariableBaseName(input_framename)
 	if RoCUIDB_Options[input_settingsname] == true then
-	    if RoCUIDB_Options["ToggleDisplay"] == true then
+	    if RoCUIDB_Options["General_ToggleDisplay"] == true then
 	    _G[RoCUI_Temp_VariableBaseName]:Show()
 		end
 	elseif RoCUIDB_Options[input_settingsname] == false then
@@ -105,8 +105,6 @@ function RoCUI_Update_FrameDimensions_Width(input_settingsname, input_framename)
 	local RoCUI_Temp_Width_Final = (RoCUI_Temp_Width*RoCUI_Temp_Width_Percentage)
 	_G[RoCUI_Temp_VariableBaseName]:SetWidth(RoCUI_Temp_Width_Final)
 	if input_framename == "sun" then
-        --local RoCUI_Temp_SunCycle_Width = 256
-        --local RoCUI_Temp_SunCycle_Width_Final = (RoCUI_Temp_SunCycle_Width*RoCUI_Temp_Width_Percentage)
         _G["RoCUI_CustomFrame_Texture_suncycle"]:SetWidth(RoCUI_Temp_Width_Final)
         _G["RoCUI_CustomFrame_Texture_sunclock"]:SetWidth(RoCUI_Temp_Width_Final)
 	elseif input_framename == "portraitplayer" then
@@ -124,8 +122,6 @@ function RoCUI_Update_FrameDimensions_Height(input_settingsname, input_framename
 	local RoCUI_Temp_Height_Final = (RoCUI_Temp_Height*RoCUI_Temp_Height_Percentage)
     _G[RoCUI_Temp_VariableBaseName]:SetHeight(RoCUI_Temp_Height_Final)
 	if input_framename == "sun" then
-        --local RoCUI_Temp_SunCycle_Height = 128
-        --local RoCUI_Temp_SunCycle_Height_Final = (RoCUI_Temp_SunCycle_Height*RoCUI_Temp_Height_Percentage)
         _G["RoCUI_CustomFrame_Texture_suncycle"]:SetHeight(RoCUI_Temp_Height_Final)
         _G["RoCUI_CustomFrame_Texture_sunclock"]:SetHeight(RoCUI_Temp_Height_Final)
 	elseif input_framename == "portraitplayer" then
@@ -154,11 +150,11 @@ function RoCUI_ToggleDisplay()
     local RoCUI_Temp_VariableBaseName = ""
 	for i, v in ipairs(RoCUI_Table_Options_Frametypes) do
 	    RoCUI_Temp_VariableBaseName = RoCUI_FetchVariableBaseName(v)
-        if RoCUIDB_Options["ToggleDisplay"] == true then
+        if RoCUIDB_Options["General_ToggleDisplay"] == true then
             if RoCUIDB_Options[("FrameVisibility_"..v)] == true then
 			    _G[RoCUI_Temp_VariableBaseName]:Show()
 			end
-	    elseif RoCUIDB_Options["ToggleDisplay"] == false then
+	    elseif RoCUIDB_Options["General_ToggleDisplay"] == false then
 	        _G[RoCUI_Temp_VariableBaseName]:Hide()
 	    else
 	    end
@@ -167,11 +163,15 @@ end
 
 
 function RoCUI_ToggleDisplay_Binding()
-    if RoCUIDB_Options["ToggleDisplay"] == true then
-        Settings.SetValue("RoCUI_Options_ToggleDisplay", false, true)
-	elseif RoCUIDB_Options["ToggleDisplay"] == false then
-        Settings.SetValue("RoCUI_Options_ToggleDisplay", true, true)
-    else
+    if not PlayerIsInCombat() then
+        if RoCUIDB_Options["General_ToggleDisplay"] == true then
+            Settings.SetValue("RoCUI_Options_General_ToggleDisplay", false, true)
+	    elseif RoCUIDB_Options["General_ToggleDisplay"] == false then
+            Settings.SetValue("RoCUI_Options_General_ToggleDisplay", true, true)
+        else
+	    end
+	else
+	    RoCUI_SendChatMessage(RoCUI_Text_CombatWarning)
 	end
 end
 
@@ -280,3 +280,26 @@ function RoCUI_RestoreDefaultSetting()
 	    Settings.SetValue(v, RoCUI_DefaultDatabase_Values[v], true)
 	end
 end
+
+
+
+
+RoCUI_Event_PlayerEntersCombat = CreateFrame("Frame")
+RoCUI_Event_PlayerEntersCombat:RegisterEvent("PLAYER_REGEN_DISABLED")
+RoCUI_Event_PlayerEntersCombat:SetScript("OnEvent", function(_, event, isRequeue)
+    for i=1, 8 do
+        local RoCUI_Temp_ButtonName = ("RoCUI_CustomFrame_Base_menubutton"..tostring(i))
+		_G[RoCUI_Temp_ButtonName]:Disable()
+	end
+end)
+
+
+
+RoCUI_Event_PlayerLeavesCombat = CreateFrame("Frame")
+RoCUI_Event_PlayerLeavesCombat:RegisterEvent("PLAYER_REGEN_ENABLED")
+RoCUI_Event_PlayerLeavesCombat:SetScript("OnEvent", function(_, event, isRequeue)
+    for i=1, 8 do
+        local RoCUI_Temp_ButtonName = ("RoCUI_CustomFrame_Base_menubutton"..tostring(i))
+		_G[RoCUI_Temp_ButtonName]:Enable()
+	end
+end)

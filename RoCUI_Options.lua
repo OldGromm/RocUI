@@ -22,58 +22,79 @@ RoCUI_Options_Category_Sub_additional4 = Settings.RegisterVerticalLayoutSubcateg
 
 
 local function OnSettingChanged_General(setting, value)
-	if setting.variable == "RoCUI_Options_Minimap_Button" then
-	    RoCUI_ToggleMinimapButton()
-	elseif setting.variable == "RoCUI_Options_Skin" then
-	    RoCUI_Update_RefreshFactionSkin()
-	elseif setting.variable == "RoCUI_Options_ToggleDisplay" then
-	    RoCUI_ToggleDisplay()
+    if not PlayerIsInCombat() then
+        if setting.variable == "RoCUI_Options_General_MinimapButton" then
+	        RoCUI_ToggleMinimapButton()
+	    elseif setting.variable == "RoCUI_Options_General_FactionSkin" then
+	        RoCUI_Update_RefreshFactionSkin()
+	    elseif setting.variable == "RoCUI_Options_General_ToggleDisplay" then
+	        RoCUI_ToggleDisplay()
+	    else
+	    end
 	else
+	    RoCUI_SendChatMessage(RoCUI_Text_CombatWarning)
 	end
 end
 
 local function OnSettingChanged_Frames(setting, value)
-    for i, v in ipairs(RoCUI_Table_Options_Frametypes) do
-	    if setting.variable == ("RoCUI_Options_FrameVisibility_"..v) then
-            RoCUI_Update_FrameVisibility(setting.variableKey, v)
-	    elseif setting.variable == ("RoCUI_Options_FrameStrata_"..v) then
-            RoCUI_Update_FrameStrata(setting.variableKey, v)
-	    elseif setting.variable == ("RoCUI_Options_FrameScale_"..v) then
-            RoCUI_Update_FrameScale(setting.variableKey, v)
-	    elseif setting.variable == ("RoCUI_Options_FrameWidth_"..v) then
-            RoCUI_Update_FrameDimensions_Width(setting.variableKey, v)
-	    elseif setting.variable == ("RoCUI_Options_FrameHeight_"..v) then
-            RoCUI_Update_FrameDimensions_Height(setting.variableKey, v)
-	    elseif setting.variable == ("RoCUI_Options_FramePosition_X_"..v) then
-            RoCUI_Update_FramePosition(setting.variableKey, v)
-	    elseif setting.variable == ("RoCUI_Options_FramePosition_Y_"..v) then
-            RoCUI_Update_FramePosition(setting.variableKey, v)
-	    elseif setting.variable == ("RoCUI_Options_Backdropinfo_Border_"..v) then
-            RoCUI_Update_FactionSkin(v, "backdrop")
-	    elseif setting.variable == ("RoCUI_Options_Backdropinfo_Background_"..v) then
-            RoCUI_Update_FactionSkin(v, "backdrop")
-	    else
+    if not PlayerIsInCombat() then
+        for i, v in ipairs(RoCUI_Table_Options_Frametypes) do
+	        if setting.variable == ("RoCUI_Options_FrameVisibility_"..v) then
+                RoCUI_Update_FrameVisibility(setting.variableKey, v)
+	        elseif setting.variable == ("RoCUI_Options_FrameStrata_"..v) then
+                RoCUI_Update_FrameStrata(setting.variableKey, v)
+	        elseif setting.variable == ("RoCUI_Options_FrameScale_"..v) then
+                RoCUI_Update_FrameScale(setting.variableKey, v)
+	        elseif setting.variable == ("RoCUI_Options_FrameWidth_"..v) then
+                RoCUI_Update_FrameDimensions_Width(setting.variableKey, v)
+	        elseif setting.variable == ("RoCUI_Options_FrameHeight_"..v) then
+                RoCUI_Update_FrameDimensions_Height(setting.variableKey, v)
+	        elseif setting.variable == ("RoCUI_Options_FramePosition_X_"..v) then
+                RoCUI_Update_FramePosition(setting.variableKey, v)
+	        elseif setting.variable == ("RoCUI_Options_FramePosition_Y_"..v) then
+                RoCUI_Update_FramePosition(setting.variableKey, v)
+	        elseif setting.variable == ("RoCUI_Options_Backdropinfo_Border_"..v) then
+                RoCUI_Update_FactionSkin(v, "backdrop")
+	        elseif setting.variable == ("RoCUI_Options_Backdropinfo_Background_"..v) then
+                RoCUI_Update_FactionSkin(v, "backdrop")
+	        else
+            end
         end
-    end
+	else
+	    RoCUI_SendChatMessage(RoCUI_Text_CombatWarning)
+	end
 end
 
 
 local function OnSettingChanged_TopMenu(setting, value)
-    for i, v in ipairs(RoCUI_Table_TopMenuVariableNames) do
-		local RoCUI_Temp_FrameTypeName = ("menubutton"..tostring(i))
-	    if setting.variable == ("RoCUI_Options_TopMenuChoice_"..v) then
-		    RoCUI_ButtonTextUpdate(RoCUI_Temp_FrameTypeName, value)
-		end
+    if not PlayerIsInCombat() then
+        for i, v in ipairs(RoCUI_Table_TopMenuVariableNames) do
+		    local RoCUI_Temp_FrameTypeName = ("menubutton"..tostring(i))
+	        if setting.variable == ("RoCUI_Options_TopMenuChoice_"..v) then
+		        RoCUI_ButtonTextUpdate(RoCUI_Temp_FrameTypeName, value)
+		    end
+	    end
+	else
+	    RoCUI_SendChatMessage(RoCUI_Text_CombatWarning)
 	end
 end
 
 
 local function OnSettingChanged_SoundOverrides(setting, value)
-    RoCUI_SoundReplacements(setting.variable, value)
+    if not PlayerIsInCombat() then
+        RoCUI_SoundReplacements(setting.variable, value)
+	else
+	    RoCUI_SendChatMessage(RoCUI_Text_CombatWarning)
+	end
 end
 
+
 local function OnSettingChanged_PortraitPowerType(setting, value)
-    RoCUI_UpdatePlayerStats_Mana()
+    if not PlayerIsInCombat() then
+        RoCUI_UpdatePlayerStats_Mana()
+	else
+	    RoCUI_SendChatMessage(RoCUI_Text_CombatWarning)
+	end
 end
 
 
@@ -422,8 +443,8 @@ end
 ---- minimap button
 do
 	local name = RoCUI_Text_Options_MinimapButton_Title
-	local variable = "RoCUI_Options_Minimap_Button"
-	local variableKey = "Minimap_Button"
+	local variable = "RoCUI_Options_General_MinimapButton"
+	local variableKey = "General_MinimapButton"
 	local tooltip = RoCUI_Text_Options_MinimapButton_Description
 
 	local setting = Settings.RegisterAddOnSetting(RoCUI_Options_Category_Sub_general, variable, variableKey, RoCUIDB_Options, Settings.VarType.Boolean, name, Settings.Default.True)
@@ -437,8 +458,8 @@ end
 ---- add-on messages
 do
 	local name = RoCUI_Text_Options_AddonMessages_Title
-	local variable = "RoCUI_Options_Addon_Messages"
-	local variableKey = "Addon_Messages"
+	local variable = "RoCUI_Options_General_AddonMessages"
+	local variableKey = "General_AddonMessages"
 	local tooltip = RoCUI_Text_Options_AddonMessages_Description
 	
 	local setting = Settings.RegisterAddOnSetting(RoCUI_Options_Category_Sub_general, variable, variableKey, RoCUIDB_Options, Settings.VarType.Boolean, name, Settings.Default.True)
@@ -452,8 +473,8 @@ end
 ---- faction skin
 do
     local name = RoCUI_Text_Options_Skins_Title
-    local variable = "RoCUI_Options_Skin"
-	local variableKey = "Skin"
+    local variable = "RoCUI_Options_General_FactionSkin"
+	local variableKey = "General_FactionSkin"
     local tooltip = RoCUI_Text_Options_Skins_Description
 
     local function GetOptions()
@@ -476,8 +497,8 @@ end
 ---- show/hide all add-on frames
 do
 	local name = RoCUI_Text_Options_ToggleDisplay_Title
-	local variable = "RoCUI_Options_ToggleDisplay"
-	local variableKey = "ToggleDisplay"
+	local variable = "RoCUI_Options_General_ToggleDisplay"
+	local variableKey = "General_ToggleDisplay"
 	local tooltip = RoCUI_Text_Options_ToggleDisplay_Description
 
 	local setting = Settings.RegisterAddOnSetting(RoCUI_Options_Category_Sub_general, variable, variableKey, RoCUIDB_Options, Settings.VarType.Boolean, name, Settings.Default.True)

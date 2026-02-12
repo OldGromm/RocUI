@@ -31,8 +31,6 @@ end)
 
 
 
-
-
 function RoCUI_SoundReplacements(input_settingsvariable, input_toggle)
 	if input_settingsvariable == "RoCUI_Options_SoundOverride_QuestAccepted" then
 	    if input_toggle == true then
