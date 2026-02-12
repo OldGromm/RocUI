@@ -47,7 +47,6 @@ function RoCUI_SoundReplacements(input_settingsvariable, input_toggle)
 		else
 		    RoCUI_CustomSound_QuestCompleted = ""
 			UnmuteSoundFile(567439)
-						print("unmuted")
 		end
 	elseif input_settingsvariable == "RoCUI_Options_SoundOverride_PlayerDies" then
 	    if input_toggle == true then
