@@ -1,16 +1,3 @@
--- general
----- chat messages
-function RoCUI_SendChatMessage(input)
-    if not PlayerIsInCombat() then
-	    if RoCUIDB_Options["General_AddonMessages"] == true then
-	        print(WrapTextInColorCode("RoC UI", "FFE6D30A").." - "..input)
-		end
-    end
-end
-
-
-
-
 -- frame creation
 ---- variable names
 function RoCUI_FetchVariableBaseName(input)
@@ -108,10 +95,26 @@ function RoCUI_Update_FrameDimensions_Width(input_settingsname, input_framename)
         _G["RoCUI_CustomFrame_Texture_suncycle"]:SetWidth(RoCUI_Temp_Width_Final)
         _G["RoCUI_CustomFrame_Texture_sunclock"]:SetWidth(RoCUI_Temp_Width_Final)
 	elseif input_framename == "portraitplayer" then
-        local RoCUI_Temp_PortraitPlayer_Width = 200
-        local RoCUI_Temp_PortraitPlayer_Width_Final = (RoCUI_Temp_PortraitPlayer_Width*RoCUI_Temp_Width_Percentage)
-        _G["RoCUI_CustomFrame_Texture_portraitplayerrender"]:SetWidth(RoCUI_Temp_PortraitPlayer_Width_Final)
+	    local RoCUI_Temp_Render_Width = RoCUI_Table_Options_Default_Width["portraitplayer_render"]
+		local RoCUI_Temp_Render_Width_Final = (RoCUI_Temp_Render_Width*RoCUI_Temp_Width_Percentage)
+        _G["RoCUI_CustomFrame_Texture_portraitplayerrender"]:SetWidth(RoCUI_Temp_Render_Width_Final)
 		_G["RoCUI_CustomFrame_Texture_portraitplayermask"]:SetWidth(RoCUI_Temp_Width_Final)
+	elseif input_framename == "infoplayer" then
+	    local RoCUI_Temp_ExperianceBar_Width = RoCUI_Table_Options_Default_Width["infoplayer_experiencebar"]
+		local RoCUI_Temp_ExperianceBar_Width_Final = (RoCUI_Temp_ExperianceBar_Width*RoCUI_Temp_Width_Percentage)
+	    local RoCUI_Temp_ExperianceBarBorder_Width = RoCUI_Table_Options_Default_Width["infoplayer_experiencebar_border"]
+		local RoCUI_Temp_ExperianceBarBorder_Width_Final = (RoCUI_Temp_ExperianceBarBorder_Width*RoCUI_Temp_Width_Percentage)
+        _G["RoCUI_CustomFrame_infoplayer_experiencebar"]:SetWidth(RoCUI_Temp_ExperianceBar_Width_Final)
+        _G["RoCUI_CustomFrame_infoplayer_experiencebar_border"]:SetWidth(RoCUI_Temp_ExperianceBarBorder_Width_Final)
+	end
+	for i=1, 8 do
+	    local RoCUI_Temp_Top = ("top"..tostring(i))
+		if input_framename == RoCUI_Temp_Top then
+		    local RoCUI_Temp_ButtonName = ("RoCUI_CustomFrame_Base_menubutton"..tostring(i))
+		    local RoCUI_Temp_Topbutton_Width = RoCUI_Table_Options_Default_Width["topbutton"]
+		    local RoCUI_Temp_Topbutton_Width_Final = (RoCUI_Temp_Topbutton_Width*RoCUI_Temp_Width_Percentage)
+            _G[RoCUI_Temp_ButtonName]:SetWidth(RoCUI_Temp_Topbutton_Width_Final)
+	    end
 	end
 end
 
@@ -125,10 +128,19 @@ function RoCUI_Update_FrameDimensions_Height(input_settingsname, input_framename
         _G["RoCUI_CustomFrame_Texture_suncycle"]:SetHeight(RoCUI_Temp_Height_Final)
         _G["RoCUI_CustomFrame_Texture_sunclock"]:SetHeight(RoCUI_Temp_Height_Final)
 	elseif input_framename == "portraitplayer" then
-        local RoCUI_Temp_PortraitPlayer_Height = 200
-        local RoCUI_Temp_PortraitPlayer_Height_Final = (RoCUI_Temp_PortraitPlayer_Height*RoCUI_Temp_Height_Percentage)
-        _G["RoCUI_CustomFrame_Texture_portraitplayerrender"]:SetHeight(RoCUI_Temp_PortraitPlayer_Height_Final)
+	    local RoCUI_Temp_Render_Height = RoCUI_Table_Options_Default_Height["portraitplayer_render"]
+		local RoCUI_Temp_Render_Height_Final = (RoCUI_Temp_Render_Height*RoCUI_Temp_Height_Percentage)
+        _G["RoCUI_CustomFrame_Texture_portraitplayerrender"]:SetHeight(RoCUI_Temp_Render_Height_Final)
 		_G["RoCUI_CustomFrame_Texture_portraitplayermask"]:SetHeight(RoCUI_Temp_Height_Final)
+	end
+	for i=1, 8 do
+	    local RoCUI_Temp_Top = ("top"..tostring(i))
+		if input_framename == RoCUI_Temp_Top then
+		    local RoCUI_Temp_ButtonName = ("RoCUI_CustomFrame_Base_menubutton"..tostring(i))
+		    local RoCUI_Temp_Topbutton_Height = RoCUI_Table_Options_Default_Height["topbutton"]
+		    local RoCUI_Temp_Topbutton_Height_Final = (RoCUI_Temp_Topbutton_Height*RoCUI_Temp_Height_Percentage)
+            _G[RoCUI_Temp_ButtonName]:SetHeight(RoCUI_Temp_Topbutton_Height_Final)
+	    end
 	end
 end
 
@@ -163,7 +175,7 @@ end
 
 
 function RoCUI_ToggleDisplay_Binding()
-    if not PlayerIsInCombat() then
+    if not RoCUI_CombatCheck() then
         if RoCUIDB_Options["General_ToggleDisplay"] == true then
             Settings.SetValue("RoCUI_Options_General_ToggleDisplay", false, true)
 	    elseif RoCUIDB_Options["General_ToggleDisplay"] == false then
@@ -171,14 +183,14 @@ function RoCUI_ToggleDisplay_Binding()
         else
 	    end
 	else
-	    RoCUI_SendChatMessage(RoCUI_Text_CombatWarning)
+	    RoCUI_SendAddonLockdownMessage()
 	end
 end
 
 
 function RoCUI_ToggleDisplay_Buttons(input_frametype, input_number)
     local RoCUI_Temp_VariableBaseName = ("RoCUI_CustomFrame_Base_"..input_frametype)
-    if input_number == 20 then
+    if input_number == 25 then
         _G[RoCUI_Temp_VariableBaseName]:Hide()
     else
         _G[RoCUI_Temp_VariableBaseName]:Show()
@@ -284,22 +296,93 @@ end
 
 
 
-RoCUI_Event_PlayerEntersCombat = CreateFrame("Frame")
-RoCUI_Event_PlayerEntersCombat:RegisterEvent("PLAYER_REGEN_DISABLED")
-RoCUI_Event_PlayerEntersCombat:SetScript("OnEvent", function(_, event, isRequeue)
-    for i=1, 8 do
-        local RoCUI_Temp_ButtonName = ("RoCUI_CustomFrame_Base_menubutton"..tostring(i))
-		_G[RoCUI_Temp_ButtonName]:Disable()
+-- update player name and title at the infopanel
+function RoCUI_UpdatePlayerNameAndTitle()
+    local RoCUI_PlayerLocation = PlayerLocation:CreateFromUnit("player")
+    local RoCUI_PlayerName = C_PlayerInfo.GetName(RoCUI_PlayerLocation)
+	local RoCUI_TitleID = GetCurrentTitle()
+	local RoCUI_TitleName = ""
+	local RoCUI_TitleType = 1
+	local RoCUI_Finalstring = ""
+	
+	if RoCUI_TitleID == -1 or nil then
+	    RoCUI_Finalstring = RoCUI_PlayerName
+	elseif RoCUIDB_Options["Infopanel_Player_Title"] == false then
+	    RoCUI_Finalstring = RoCUI_PlayerName
+    else
+	    RoCUI_TitleName = GetTitleName(RoCUI_TitleID)
+		
+		for i, v in ipairs(RoCUI_Table_TitleBehindName) do
+	        if RoCUI_TitleID == v then
+		        RoCUI_TitleType = 2
+		    end
+		end
+        for i, v in ipairs(RoCUI_Table_TitleBehindNameWithComma) do
+	        if RoCUI_TitleID == v then
+		        RoCUI_TitleType = 3
+		    end
+		end
+
+        if RoCUI_TitleType == 1 then
+	        RoCUI_Finalstring = (RoCUI_TitleName..RoCUI_PlayerName)
+        elseif RoCUI_TitleType == 2 then
+	        RoCUI_Finalstring = (RoCUI_PlayerName..RoCUI_TitleName)
+        elseif RoCUI_TitleType == 3 then
+	        RoCUI_Finalstring = (RoCUI_PlayerName..", "..RoCUI_TitleName)
+	    else
+	    end
 	end
-end)
+	
+    RoCUI_CustomFrame_infoplayer_name:SetTextToFit(RoCUI_Finalstring)
+end
 
 
 
-RoCUI_Event_PlayerLeavesCombat = CreateFrame("Frame")
-RoCUI_Event_PlayerLeavesCombat:RegisterEvent("PLAYER_REGEN_ENABLED")
-RoCUI_Event_PlayerLeavesCombat:SetScript("OnEvent", function(_, event, isRequeue)
-    for i=1, 8 do
-        local RoCUI_Temp_ButtonName = ("RoCUI_CustomFrame_Base_menubutton"..tostring(i))
-		_G[RoCUI_Temp_ButtonName]:Enable()
+
+-- update player class/specialization name and level at the experience bar on the infopanel
+function RoCUI_UpdatePlayerSpecAndLevel()
+	local RoCUI_Temp_Specialization = C_SpecializationInfo.GetSpecialization()
+    local RoCUI_Temp_SpecName = select(2, C_SpecializationInfo.GetSpecializationInfo(RoCUI_Temp_Specialization))
+    local RoCUI_Temp_Level = UnitLevel("player")
+    local RoCUI_Temp_PlayerLocation = PlayerLocation:CreateFromUnit("player")
+    local RoCUI_Temp_ClassName = select(1, C_PlayerInfo.GetClass(RoCUI_Temp_PlayerLocation))
+	local RoCUI_Finalstring = ""
+
+	if RoCUIDB_Options["Infopanel_ExperienceBarClassName_Title"] == true then
+	    RoCUI_Finalstring = (LEVEL.." "..tostring(RoCUI_Temp_Level).." "..RoCUI_Temp_SpecName.." "..RoCUI_Temp_ClassName)
+	else
+        RoCUI_Finalstring = (LEVEL.." "..tostring(RoCUI_Temp_Level).." "..RoCUI_Temp_ClassName)
 	end
-end)
+	
+	if RoCUI_GameVersion == 1 then
+	    RoCUI_Finalstring = (LEVEL.." "..tostring(RoCUI_Temp_Level).." "..RoCUI_Temp_ClassName)
+	end
+	
+    RoCUI_CustomFrame_infoplayer_experiencebar_title:SetTextToFit(RoCUI_Finalstring)
+end
+
+
+
+
+-- update the player experience bar on the infopanel
+function RoCUI_UpdatePlayerExperienceBar()
+    local RoCUI_Experience_Current = UnitXP("player")
+    local RoCUI_Experience_Next = UnitXPMax("player")
+	local RoCUI_Experience_Progress = (RoCUI_Experience_Current / RoCUI_Experience_Next * 100)
+
+	local RoCUI_CurrentPlayerLevel = UnitLevel("player")
+	local RoCUI_CurrentExpansionMaxLevel = 0
+
+	if RoCUI_GameVersion == 3 then
+        RoCUI_CurrentExpansionMaxLevel = GetMaxLevelForLatestExpansion()
+    else
+        RoCUI_CurrentExpansionMaxLevel = GetMaxPlayerLevel()
+    end
+	
+	
+	if RoCUI_CurrentPlayerLevel == RoCUI_CurrentExpansionMaxLevel then
+	    RoCUI_CustomFrame_infoplayer_experiencebar:SetValue(100)
+	else
+	    RoCUI_CustomFrame_infoplayer_experiencebar:SetValue(RoCUI_Experience_Progress)
+	end
+end

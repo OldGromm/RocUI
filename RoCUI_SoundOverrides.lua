@@ -4,31 +4,6 @@ RoCUI_CustomSound_PlayerDies = "Interface\\AddOns\\RoCUI\\sounds\\quests\\QuestF
 RoCUI_CustomSound_Queue = "Interface\\AddOns\\RoCUI\\sounds\\interface\\GameFound.ogg"
 
 
-RoCUI_Event_QuestAccepted = CreateFrame("Frame")
-RoCUI_Event_QuestAccepted:RegisterEvent("QUEST_ACCEPTED")
-RoCUI_Event_QuestAccepted:SetScript("OnEvent", function(_, event, questId)
-    PlaySoundFile(RoCUI_CustomSound_QuestAccepted, "SFX")
-end)
-
-RoCUI_Event_QuestCompleted = CreateFrame("Frame")
-RoCUI_Event_QuestCompleted:RegisterEvent("QUEST_TURNED_IN")
-RoCUI_Event_QuestCompleted:SetScript("OnEvent", function(_, event, questID, xpReward, moneyReward)
-    PlaySoundFile(RoCUI_CustomSound_QuestCompleted, "SFX")
-end)
-
-RoCUI_Event_PlayerDies = CreateFrame("Frame")
-RoCUI_Event_PlayerDies:RegisterEvent("PLAYER_DEAD")
-RoCUI_Event_PlayerDies:SetScript("OnEvent", function(_, event)
-    PlaySoundFile(RoCUI_CustomSound_PlayerDies, "SFX")
-end)
-
-RoCUI_Event_Queue = CreateFrame("Frame")
-RoCUI_Event_Queue:RegisterEvent("LFG_PROPOSAL_SHOW")
-RoCUI_Event_Queue:SetScript("OnEvent", function(_, event, isRequeue)
-    PlaySoundFile(RoCUI_CustomSound_Queue, "SFX")
-end)
-
-
 
 
 function RoCUI_SoundReplacements(input_settingsvariable, input_toggle)

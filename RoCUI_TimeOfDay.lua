@@ -60,17 +60,3 @@ function RoCUI_CheckCurrentTimeofDay(input_mode)
     end
 
 end
-
-
-
-
-RoCUI_Event_UpdateSundial = CreateFrame("Frame")
-RoCUI_Event_UpdateSundial:RegisterEvent("PLAYER_ENTERING_WORLD")
-RoCUI_Event_UpdateSundial:SetScript("OnEvent", function(_, event, isInitialLogin, isReloadingUi)
-    if isInitialLogin == true then
-        RoCUI_CheckCurrentTimeofDay("FirstLogin")
-    elseif isReloadingUi == true then
-        RoCUI_CheckCurrentTimeofDay("UIReload")
-    else
-    end
-end)

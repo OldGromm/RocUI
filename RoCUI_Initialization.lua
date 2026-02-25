@@ -9,14 +9,22 @@ RoCUI_DefaultDatabase_Values = {}
 
 
 
-
 -- setup other variables
 RoCUI_Table_SkinNames = {"human", "undead", "orc", "nightelf"}
 RoCUI_Table_StrataNames = {"TOOLTIP", "FULLSCREEN_DIALOG", "FULLSCREEN", "DIALOG", "HIGH", "MEDIUM", "LOW", "BACKGROUND"}
 RoCUI_Table_Options_Frametypes = {"main", "sun", "portraitplayer", "top1", "top2", "top3", "top4", "top5", "top6", "top7", "top8", "infoplayer", "additional1", "additional2", "additional3", "additional4"}
+RoCUI_Table_Options_Frametypes_HideByDefault = {"main", "additional1", "additional2", "additional3", "additional4"}
+RoCUI_Table_Options_Frametypes_UseBackdrop = {"infoplayer", "additional1", "additional2", "additional3", "additional4"}
 RoCUI_Table_SecondsUntilReset = {77400, 72000, 66600, 61200, 55800, 50400, 45000, 39600, 34200, 28800, 23400, 18000, 12600, 7200, 1800, 0}
 RoCUI_Table_TopMenuVariableNames = {"top1", "top2", "top3", "top4", "top5", "top6", "top7", "top8"}
-RoCUI_Table_SoundOverrides = {"QuestAccepted", "QuestCompleted", "PlayerDies", "Queue"}
+RoCUI_Table_SubitemType_Weapon = { "axe", "axe", "arrow", "gun", "hammer", "hammer", "polearm", "sword", "sword", "glaive", "staff", "claw", "claw", "fist", "sword", "dagger", "dagger", "polearm", "arrow", "staff", "fish"}
+RoCUI_Table_SubitemType_Armor = {"unarmored", "cloth", "leather", "mail", "plate", "unarmored", "shield", "libram", "idol", "totem", "sigil", "relic"}
+RoCUI_Table_SubitemType_Armor_NoQualityVariants = {"unarmored", "libram", "idol", "totem", "sigil", "relic"}
+RoCUI_Table_TitleBehindName = {}
+RoCUI_Table_TitleBehindNameWithComma = {}
+RoCUI_Table_ClassIcons = {626008, 626003, 626000, 626005, 626004, 625998, 626006, 626001, 626007, 626002, 625999, 1260827, 4574311}
+RoCUI_Table_Classic_PrimaryStat = {"stats_str", "stats_str", "stats_agi", "stats_agi", "stats_int", "stats_str", "stats_int", "stats_int", "stats_int", "stats_agi", "stats_int", "stats_agi", "stats_int"}
+RoCUI_NumberofBags = 0
 
 
 
@@ -124,6 +132,8 @@ else
 end
 
 
+
+
 -- determine the default value of the faction skin for the options menu
 if RoCUIDB_Skin == "Human" then
     RoCUI_FactionSkinDefault = 1
@@ -141,6 +151,81 @@ end
 
 -- fecht current player class
 _, _, RoCUI_PlayerCharacterClass = C_PlayerInfo.GetClass(RoCUI_PlayerLocation)
+
+
+
+
+-- determine default UI scale to use
+RoCUI_DefaultUIScale = 1.0
+
+
+
+
+-- define custom abbreviation data for too large numbers at the portrait frame
+RoCUI_CustomAbbreviationData_Portrait = {
+    breakpointData = {
+        {
+        breakpoint = 100000,
+        abbreviation = "",
+        significandDivisor = 10,
+        fractionDivisor = 1,
+        abbreviationIsGlobal = false,
+        },
+        {
+        breakpoint = 1000000,
+        abbreviation = "",
+        significandDivisor = 100,
+        fractionDivisor = 1,
+        abbreviationIsGlobal = false,
+        }
+    }
+}
+
+-- define custom abbreviation data for too large numbers at the infopanel frame
+RoCUI_CustomAbbreviationData_Infopanel = {
+    breakpointData = {
+        {
+        breakpoint = 1000,
+        abbreviation = "",
+        significandDivisor = 10,
+        fractionDivisor = 1,
+        abbreviationIsGlobal = false,
+        },
+        {
+        breakpoint = 10000,
+        abbreviation = "",
+        significandDivisor = 100,
+        fractionDivisor = 1,
+        abbreviationIsGlobal = false,
+        }
+    }
+}
+
+RoCUI_CustomAbbreviationData_Infopanel_WeaponDamage = {
+    breakpointData = {
+        {
+        breakpoint = 100,
+        abbreviation = "",
+        significandDivisor = 1,
+        fractionDivisor = 1,
+        abbreviationIsGlobal = false,
+        },
+        {
+        breakpoint = 1000,
+        abbreviation = "",
+        significandDivisor = 10,
+        fractionDivisor = 1,
+        abbreviationIsGlobal = false,
+        },
+        {
+        breakpoint = 10000,
+        abbreviation = "",
+        significandDivisor = 100,
+        fractionDivisor = 1,
+        abbreviationIsGlobal = false,
+        }
+    }
+}
 
 
 
@@ -185,14 +270,35 @@ RoCUI_CustomFrame_Texture_portraitplayer = {}
 RoCUI_CustomFrame_Texture_portraitplayerrender = {}
 RoCUI_CustomFrame_Texture_portraitplayermask = {}
 RoCUI_CustomFrame_Portrait_Health = {}
-RoCUI_CustomFrame_Portrait_Mana = {}
+RoCUI_CustomFrame_Portrait_Power = {}
+
+
+
 
 RoCUI_CustomFrame_Base_infoplayer = {}
 RoCUI_CustomFrame_Texture_infoplayer = {}
+
 RoCUI_CustomFrame_infoplayer_name = {}
-RoCUI_CustomFrame_infoplayer_damage_icon = {}
-RoCUI_CustomFrame_infoplayer_damage_title = {}
-RoCUI_CustomFrame_infoplayer_damage_number = {}
+RoCUI_CustomFrame_infoplayer_experiencebar = {}
+RoCUI_CustomFrame_infoplayer_experiencebar_title = {}
+RoCUI_CustomFrame_infoplayer_experiencebar_border = {}
+
+RoCUI_CustomFrame_infoplayer_weapon_icon = {}
+RoCUI_CustomFrame_infoplayer_weapon_border = {}
+RoCUI_CustomFrame_infoplayer_weapon_title = {}
+RoCUI_CustomFrame_infoplayer_weapon_number = {}
+
+RoCUI_CustomFrame_infoplayer_armor_icon = {}
+RoCUI_CustomFrame_infoplayer_armor_border = {}
+RoCUI_CustomFrame_infoplayer_armor_title = {}
+RoCUI_CustomFrame_infoplayer_armor_number = {}
+
+RoCUI_CustomFrame_infoplayer_stats_icon = {}
+RoCUI_CustomFrame_infoplayer_stats_border = {}
+RoCUI_CustomFrame_infoplayer_stats_title = {}
+RoCUI_CustomFrame_infoplayer_stats_number = {}
+
+
 
 RoCUI_CustomFrame_Base_additional1 = {}
 RoCUI_CustomFrame_Texture_additional1 = {}
@@ -205,3 +311,15 @@ RoCUI_CustomFrame_Texture_additional4 = {}
 
 RoCUI_CustomFrame_Base_inventory = {}
 RoCUI_CustomFrame_Texture_inventory = {}
+RoCUI_CustomFrame_Base_inventoryslot1 = {}
+RoCUI_CustomFrame_Texture_inventoryslot1 = {}
+RoCUI_CustomFrame_Base_inventoryslot2 = {}
+RoCUI_CustomFrame_Texture_inventoryslot2 = {}
+RoCUI_CustomFrame_Base_inventoryslot3 = {}
+RoCUI_CustomFrame_Texture_inventoryslot3 = {}
+RoCUI_CustomFrame_Base_inventoryslot4 = {}
+RoCUI_CustomFrame_Texture_inventoryslot4 = {}
+RoCUI_CustomFrame_Base_inventoryslot5 = {}
+RoCUI_CustomFrame_Texture_inventoryslot5 = {}
+RoCUI_CustomFrame_Base_inventoryslot6 = {}
+RoCUI_CustomFrame_Texture_inventoryslot6 = {}

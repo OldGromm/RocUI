@@ -32,17 +32,6 @@ end
 
 
 
--- Show or hide the minimap button after login
-RoCUI_Event_AddonLoaded_Minimap = CreateFrame("Frame")
-RoCUI_Event_AddonLoaded_Minimap:RegisterEvent("ADDON_LOADED")
-RoCUI_Event_AddonLoaded_Minimap:SetScript("OnEvent", function(self, event)
-    RoCUI_ToggleMinimapButton()
-    RoCUI_Event_AddonLoaded_Minimap:UnregisterEvent("ADDON_LOADED")
-end)
-
-
-
-
 -- Slash command
 SLASH_RoCUIMINIMAP1 = "/RoCUIicon"
 SLASH_RoCUIMINIMAP2 = "/reignofchaosuiicon"

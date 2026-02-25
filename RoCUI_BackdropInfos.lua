@@ -7,7 +7,7 @@ RoCUI_Table_Inset_Tilesize = {64, 128, 128}
 
 
 
--- update all backdrops
+-- update all faction skin backdrops
 function RoCUI_UpdateBackdrop(input_framename)
     -- border
     local RoCUI_PlayerChoice_Border_Name = ("Backdropinfo_Border_"..input_framename)
@@ -15,7 +15,9 @@ function RoCUI_UpdateBackdrop(input_framename)
     local RoCUI_Temp_TextureFilepath_Border = RoCUI_FetchTextureFilepath("backdrop_border_"..RoCUI_PlayerChoice_Border_Number)
 
 	if RoCUI_PlayerChoice_Border_Number == 3 then
-	    RoCUI_Temp_TextureFilepath_Background = "Interface\\AddOns\\RoCUI\\images\\backdrop_border_3\\metal"
+	    RoCUI_Temp_TextureFilepath_Border = "Interface\\AddOns\\RoCUI\\images\\backdrop_border_3\\metal"
+	elseif RoCUI_PlayerChoice_Border_Number == 4 then
+	    RoCUI_Temp_TextureFilepath_Border = "dungeons\\textures\\common\\transparent"
 	end
 
 
@@ -50,3 +52,43 @@ function RoCUI_UpdateBackdrop(input_framename)
 	
 	return RoCUI_CustomBackdrop
 end
+
+
+
+
+-- backdrop used for infopanel icons
+function RoCUI_UpdateBackdrop_Infopanel(input_background)
+	local RoCUI_CustomBackdrop = {
+        bgFile = input_background,
+        edgeFile = "Interface\\AddOns\\RoCUI\\images\\infopanel\\border",
+        tile = false,
+        tileEdge = true,
+        tileSize = 16,
+        edgeSize = 16,
+        insets = 
+		{
+		left = 6,
+		right = 6,
+		top = 6,
+		bottom = 6
+		},
+    }
+	return RoCUI_CustomBackdrop
+end
+
+
+RoCUI_CustomBackdrop_Infopanel_ExperienceBar = {
+        bgFile = "dungeons\\textures\\common\\transparent",
+        edgeFile = "Interface\\AddOns\\RoCUI\\images\\infopanel\\expbarborder",
+        tile = true,
+        tileEdge = true,
+        tileSize = 16,
+        edgeSize = 16,
+        insets = 
+		{
+		left = 5,
+		right = 5,
+		top = 5,
+		bottom = 5
+		},
+    }

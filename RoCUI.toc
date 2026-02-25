@@ -1,7 +1,7 @@
 ## Interface: 20505, 50503, 120000, 120001
 ## Title: RoC UI
 ## Author: OldGromm
-## Version: 1.01
+## Version: 1.02
 ## IconTexture: Interface\Addons\RoCUI\images\other\RoCUI_Icon.blp
 ## Notes: Changes the user interface to resemble Warcraft III.
 ## Category: User Interface

@@ -32,7 +32,7 @@ function RoCUI_CreateCustomFrame(input_frametype, input_anchor, input_backdrop)
 
     ---- scale
     _G[RoCUI_Temp_VariableBaseName]:SetScale(RoCUIDB_Options["FrameScale_"..input_frametype])
-
+    _G[RoCUI_Temp_VariableBaseName]:SetIgnoreParentScale(true)
 
     ---- strata
 	local RoCUI_Temp_Strata_Options = RoCUIDB_Options["FrameStrata_"..input_frametype]
@@ -65,41 +65,20 @@ end
 function RoCUI_CreateCustomFrame_DayandNightCycle()
     RoCUI_CustomFrame_Texture_suncycle = RoCUI_CustomFrame_Base_sun:CreateTexture()
     RoCUI_CustomFrame_Texture_suncycle:SetPoint("TOP", RoCUI_FrameWindowName_sun, "TOP", 0, 0)
+	RoCUI_CustomFrame_Texture_suncycle:SetSize(RoCUI_Table_Options_Default_Width["sun"], RoCUI_Table_Options_Default_Height["sun"])
+	
 
     RoCUI_CustomFrame_Texture_sunclock = RoCUI_CustomFrame_Base_sun:CreateTexture()
     RoCUI_CustomFrame_Texture_sunclock:SetPoint("TOP", RoCUI_FrameWindowName_sun, "TOP", 0, 0)
+	RoCUI_CustomFrame_Texture_sunclock:SetSize(RoCUI_Table_Options_Default_Width["sun"], RoCUI_Table_Options_Default_Height["sun"])
 	
     RoCUI_CustomFrame_Texture_sunclock:SetDrawLayer("BACKGROUND", 3)
     RoCUI_CustomFrame_Texture_sun:SetDrawLayer("BACKGROUND", 2)
     RoCUI_CustomFrame_Texture_suncycle:SetDrawLayer("BACKGROUND", 1)
 end
 
----- portrait
-function RoCUI_CreateCustomFrame_PortraitPlayer()
-    RoCUI_CustomFrame_Texture_portraitplayerrender = RoCUI_CustomFrame_Base_portraitplayer:CreateTexture("RoCUI_Portrait_Player")
-    RoCUI_CustomFrame_Texture_portraitplayerrender:SetTexture("Interface\\AddOns\\RoCUI\\images\\portrait\\background")
-    RoCUI_CustomFrame_Texture_portraitplayerrender:SetSize(200, 200)
-    RoCUI_CustomFrame_Texture_portraitplayerrender:SetPoint("BOTTOM", RoCUI_FrameWindowName_portraitplayer, "BOTTOM", 0, 30)
 
-    RoCUI_CustomFrame_Texture_portraitplayermask = RoCUI_CustomFrame_Base_portraitplayer:CreateMaskTexture()
-    RoCUI_CustomFrame_Texture_portraitplayermask:SetTexture("Interface\\AddOns\\RoCUI\\images\\portrait\\mask", "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-    RoCUI_CustomFrame_Texture_portraitplayermask:SetPoint("BOTTOM", RoCUI_FrameWindowName_portraitplayer, "BOTTOM", 0, 0)
-    RoCUI_CustomFrame_Texture_portraitplayermask:SetSize(256, 512)
-    RoCUI_CustomFrame_Texture_portraitplayerrender:AddMaskTexture(RoCUI_CustomFrame_Texture_portraitplayermask)
 
-    RoCUI_CustomFrame_Texture_portraitplayer:SetDrawLayer("BACKGROUND", 2)
-    RoCUI_CustomFrame_Texture_portraitplayerrender:SetDrawLayer("BACKGROUND", 1)
-
-	RoCUI_CustomFrame_Portrait_Health = RoCUI_CustomFrame_Base_portraitplayer:CreateFontString(nil, "OVERLAY", "RoCUIHealthFont")
-    RoCUI_CustomFrame_Portrait_Health:SetPoint("BOTTOM", RoCUI_FrameWindowName_portraitplayer, "BOTTOM", 0, 34)
-    RoCUI_CustomFrame_Portrait_Health:SetSize(134, 20)
-    RoCUI_CustomFrame_Portrait_Health:SetText("")
-
-    RoCUI_CustomFrame_Portrait_Mana = RoCUI_CustomFrame_Base_portraitplayer:CreateFontString(nil, "OVERLAY", "RoCUIManaFont")
-    RoCUI_CustomFrame_Portrait_Mana:SetPoint("BOTTOM", RoCUI_FrameWindowName_portraitplayer, "BOTTOM", 0, 5)
-    RoCUI_CustomFrame_Portrait_Mana:SetSize(134, 20)
-    RoCUI_CustomFrame_Portrait_Mana:SetText("")
-end
 
 ---- top row - menu buttons
 function RoCUI_CreateCustomFrame_MenuButton()
@@ -110,17 +89,17 @@ function RoCUI_CreateCustomFrame_MenuButton()
 		local RoCUI_Temp_FrameType_Top = ("top"..tostring(i))
 
         _G[RoCUI_Temp_ButtonName] = CreateFrame("Button", nil, _G[RoCUI_Temp_FrameWindowName], "RoCUIButtonTemplate")
-        _G[RoCUI_Temp_ButtonName]:SetPoint("TOP", _G[RoCUI_Temp_FrameWindowName], "TOP", 0, -2)
-        _G[RoCUI_Temp_ButtonName]:SetSize(154, 36)
+        _G[RoCUI_Temp_ButtonName]:SetPoint("TOP", _G[RoCUI_Temp_FrameWindowName], "TOP", 0, -3)
+        _G[RoCUI_Temp_ButtonName]:SetSize(RoCUI_Table_Options_Default_Width["topbutton"], RoCUI_Table_Options_Default_Height["topbutton"])
         _G[RoCUI_Temp_ButtonName]:SetText("")
 
         RoCUI_Update_FactionSkin(RoCUI_Temp_FrameType, "button")
 
 	    _G[RoCUI_Temp_ButtonName]:SetScript("OnClick", function(self, button)
-            if not PlayerIsInCombat() then
+		    if not RoCUI_CombatCheck() then
                 RoCUI_ButtonReaction(RoCUI_Temp_FrameType_Top)
 	        else
-	            RoCUI_SendChatMessage(RoCUI_Text_CombatWarning)
+	            RoCUI_SendAddonLockdownMessage()
 	        end
         end)
 	end
@@ -129,46 +108,128 @@ end
 
 
 
-function RoCUI_CreateCustomFrame_InfoPlayer()
-   --- WIP
+---- portrait
+function RoCUI_CreateCustomFrame_PortraitPlayer()
+    RoCUI_CustomFrame_Texture_portraitplayerrender = RoCUI_CustomFrame_Base_portraitplayer:CreateTexture("RoCUI_Portrait_Player")
+    RoCUI_CustomFrame_Texture_portraitplayerrender:SetTexture("Interface\\AddOns\\RoCUI\\images\\portrait\\background")
+    RoCUI_CustomFrame_Texture_portraitplayerrender:SetSize(RoCUI_Table_Options_Default_Width["portraitplayer_render"], RoCUI_Table_Options_Default_Height["portraitplayer_render"])
+    RoCUI_CustomFrame_Texture_portraitplayerrender:SetPoint("BOTTOM", RoCUI_FrameWindowName_portraitplayer, "BOTTOM", 0, 28)
+	SetPortraitTexture(RoCUI_CustomFrame_Texture_portraitplayerrender, "player")
+
+    RoCUI_CustomFrame_Texture_portraitplayermask = RoCUI_CustomFrame_Base_portraitplayer:CreateMaskTexture()
+    RoCUI_CustomFrame_Texture_portraitplayermask:SetTexture("Interface\\AddOns\\RoCUI\\images\\portrait\\mask", "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+    RoCUI_CustomFrame_Texture_portraitplayermask:SetPoint("BOTTOM", RoCUI_FrameWindowName_portraitplayer, "BOTTOM", 0, 0)
+    RoCUI_CustomFrame_Texture_portraitplayermask:SetSize(RoCUI_Table_Options_Default_Width["portraitplayer"], RoCUI_Table_Options_Default_Height["portraitplayer"])
+    RoCUI_CustomFrame_Texture_portraitplayerrender:AddMaskTexture(RoCUI_CustomFrame_Texture_portraitplayermask)
+
+    RoCUI_CustomFrame_Texture_portraitplayer:SetDrawLayer("BACKGROUND", 2)
+    RoCUI_CustomFrame_Texture_portraitplayerrender:SetDrawLayer("BACKGROUND", 1)
+
+	RoCUI_CustomFrame_Portrait_Health = RoCUI_CustomFrame_Base_portraitplayer:CreateFontString(nil, "OVERLAY", "RoCUIHealthFont")
+    RoCUI_CustomFrame_Portrait_Health:SetPoint("BOTTOM", RoCUI_FrameWindowName_portraitplayer, "BOTTOM", 0, 28)
+    RoCUI_CustomFrame_Portrait_Health:SetSize(140, 20)
+    RoCUI_CustomFrame_Portrait_Health:SetText("")
+
+    RoCUI_CustomFrame_Portrait_Power = RoCUI_CustomFrame_Base_portraitplayer:CreateFontString(nil, "OVERLAY", "RoCUIPowerFont")
+    RoCUI_CustomFrame_Portrait_Power:SetPoint("BOTTOM", RoCUI_FrameWindowName_portraitplayer, "BOTTOM", 0, 4)
+    RoCUI_CustomFrame_Portrait_Power:SetSize(140, 20)
+    RoCUI_CustomFrame_Portrait_Power:SetText("")
 end
 
 
 
 
--- create all frames on start up
-function RoCUI_CreateCustomFramesAfterAddonLoad()
-	RoCUI_CreateCustomFrame("main", "BOTTOM", "")
-    RoCUI_CreateCustomFrame("sun", "TOP", "")
-	RoCUI_CreateCustomFrame("portraitplayer", "CENTER", "")
-    RoCUI_CreateCustomFrame("infoplayer", "CENTER", "backdrop")
-    RoCUI_CreateCustomFrame("top1", "TOP", "")
-    RoCUI_CreateCustomFrame("top2", "TOP", "")
-    RoCUI_CreateCustomFrame("top3", "TOP", "")
-    RoCUI_CreateCustomFrame("top4", "TOP", "")
-    RoCUI_CreateCustomFrame("top5", "TOP", "")
-    RoCUI_CreateCustomFrame("top6", "TOP", "")
-    RoCUI_CreateCustomFrame("top7", "TOP", "")
-    RoCUI_CreateCustomFrame("top8", "TOP", "")
-    RoCUI_CreateCustomFrame("additional1", "CENTER", "backdrop")
-    RoCUI_CreateCustomFrame("additional2", "CENTER", "backdrop")
-    RoCUI_CreateCustomFrame("additional3", "CENTER", "backdrop")
-    RoCUI_CreateCustomFrame("additional4", "CENTER", "backdrop")
-	RoCUI_CreateCustomFrame_DayandNightCycle()
-	RoCUI_CreateCustomFrame_PortraitPlayer()
-	RoCUI_CreateCustomFrame_MenuButton()
+---- player infopanel
+function RoCUI_CreateCustomFrame_InfoPlayer()
 
-	for i=1, 8 do
-	    local RoCUI_Temp_Menubutton = ("menubutton"..tostring(i))
-		local RoCUI_Temp_Top = ("top"..tostring(i))
-		local RoCUI_Temp_Options = ("TopMenuChoice_"..RoCUI_Temp_Top)
-		local RoCUI_Temp_Choice = RoCUIDB_Options[RoCUI_Temp_Options]
-		RoCUI_ButtonTextUpdate(RoCUI_Temp_Menubutton, RoCUI_Temp_Choice)
-	end
+    ---- player name	
+	RoCUI_CustomFrame_infoplayer_name = RoCUI_CustomFrame_Base_infoplayer:CreateFontString(nil, "OVERLAY", "RoCUIInfopanelPlayerName")
+    RoCUI_CustomFrame_infoplayer_name:SetPoint("TOP", RoCUI_FrameWindowName_infoplayer, "TOP", 0, -38)
+    RoCUI_CustomFrame_infoplayer_name:SetSize(RoCUI_Table_Options_Default_Width["infoplayer"], 20)
+    RoCUI_CustomFrame_infoplayer_name:SetTextToFit("")
+	RoCUI_UpdatePlayerNameAndTitle()
 
-	for i, v in ipairs(RoCUI_Table_SoundOverrides) do
-    local RoCUI_Temp_VariableName = ("RoCUI_Options_SoundOverride_"..v)
-	local RoCUI_Temp_OptionsValue = RoCUIDB_Options["SoundOverride_"..v]
-    RoCUI_SoundReplacements(RoCUI_Temp_VariableName, RoCUI_Temp_OptionsValue)
-    end
+
+    ---- experience bar
+    RoCUI_CustomFrame_infoplayer_experiencebar = CreateFrame("StatusBar", nil, RoCUI_CustomFrame_Base_infoplayer)
+    RoCUI_CustomFrame_infoplayer_experiencebar:SetPoint("TOP", RoCUI_FrameWindowName_infoplayer, "TOP", 0, -61)
+    RoCUI_CustomFrame_infoplayer_experiencebar:SetSize(RoCUI_Table_Options_Default_Width["infoplayer_experiencebar"], RoCUI_Table_Options_Default_Height["infoplayer_experiencebar"])
+    RoCUI_CustomFrame_infoplayer_experiencebar:SetStatusBarTexture("Interface\\AddOns\\RoCUI\\images\\infopanel\\expbar")
+    RoCUI_CustomFrame_infoplayer_experiencebar:SetStatusBarColor(0.529, 0, 0.498)
+    RoCUI_CustomFrame_infoplayer_experiencebar:SetMinMaxValues(0, 100)
+	RoCUI_UpdatePlayerExperienceBar()
+	
+	RoCUI_CustomFrame_infoplayer_experiencebar_title = RoCUI_CustomFrame_Base_infoplayer:CreateFontString(nil, "OVERLAY", "RoCUIInfopanelExperienceBarText")
+    RoCUI_CustomFrame_infoplayer_experiencebar_title:SetPoint("TOP", RoCUI_FrameWindowName_infoplayer, "TOP", 0, -61)
+    RoCUI_CustomFrame_infoplayer_experiencebar_title:SetSize(RoCUI_Table_Options_Default_Width["infoplayer_experiencebar"], RoCUI_Table_Options_Default_Height["infoplayer_experiencebar"])
+    RoCUI_UpdatePlayerSpecAndLevel()
+
+    RoCUI_CustomFrame_infoplayer_experiencebar_border = CreateFrame("Frame", nil, RoCUI_CustomFrame_Base_infoplayer, "BackdropTemplate")
+	RoCUI_CustomFrame_infoplayer_experiencebar_border:SetPoint("TOP", RoCUI_FrameWindowName_infoplayer, "TOP", 0, -56)
+    RoCUI_CustomFrame_infoplayer_experiencebar_border:SetSize(RoCUI_Table_Options_Default_Width["infoplayer_experiencebar_border"], RoCUI_Table_Options_Default_Height["infoplayer_experiencebar_border"])
+    RoCUI_CustomFrame_infoplayer_experiencebar_border:SetBackdrop(RoCUI_CustomBackdrop_Infopanel_ExperienceBar)
+
+
+
+
+    ---- weapon icon and text
+	RoCUI_CustomFrame_infoplayer_weapon_icon = RoCUI_CustomFrame_Base_infoplayer:CreateTexture(nil, "ARTWORK")
+	RoCUI_CustomFrame_infoplayer_weapon_icon:SetPoint("TOPLEFT", RoCUI_FrameWindowName_infoplayer, "TOPLEFT", 42, -100)
+	RoCUI_CustomFrame_infoplayer_weapon_icon:SetSize(50, 50)
+	RoCUI_CustomFrame_infoplayer_weapon_icon:SetTexture("Interface\\AddOns\\RoCUI\\images\\infopanel\\placeholder")
+
+	RoCUI_CustomFrame_infoplayer_weapon_border = RoCUI_CustomFrame_Base_infoplayer:CreateTexture(nil, "ARTWORK")
+	RoCUI_CustomFrame_infoplayer_weapon_border:SetPoint("TOPLEFT", RoCUI_FrameWindowName_infoplayer, "TOPLEFT", 42, -100)
+	RoCUI_CustomFrame_infoplayer_weapon_border:SetSize(50, 50)
+	RoCUI_CustomFrame_infoplayer_weapon_border:SetTexture("Interface\\AddOns\\RoCUI\\images\\infopanel\\generaliconborder")
+
+	RoCUI_CustomFrame_infoplayer_weapon_title = RoCUI_CustomFrame_Base_infoplayer:CreateFontString(nil, "OVERLAY", "RoCUIInfopanelStatNormal")
+    RoCUI_CustomFrame_infoplayer_weapon_title:SetPoint("TOPLEFT", RoCUI_FrameWindowName_infoplayer, "TOPLEFT", 100, -100)
+    RoCUI_CustomFrame_infoplayer_weapon_title:SetSize(130, 70)
+    RoCUI_CustomFrame_infoplayer_weapon_title:SetText("")
+
+
+    ---- armor icon and text
+	RoCUI_CustomFrame_infoplayer_armor_icon = RoCUI_CustomFrame_Base_infoplayer:CreateTexture(nil, "ARTWORK")
+	RoCUI_CustomFrame_infoplayer_armor_icon:SetPoint("TOPLEFT", RoCUI_FrameWindowName_infoplayer, "TOPLEFT", 42, -170)
+	RoCUI_CustomFrame_infoplayer_armor_icon:SetSize(50, 50)
+	RoCUI_CustomFrame_infoplayer_armor_icon:SetTexture("Interface\\AddOns\\RoCUI\\images\\infopanel\\placeholder")
+
+	RoCUI_CustomFrame_infoplayer_armor_border = RoCUI_CustomFrame_Base_infoplayer:CreateTexture(nil, "ARTWORK")
+	RoCUI_CustomFrame_infoplayer_armor_border:SetPoint("TOPLEFT", RoCUI_FrameWindowName_infoplayer, "TOPLEFT", 42, -170)
+	RoCUI_CustomFrame_infoplayer_armor_border:SetSize(50, 50)
+	RoCUI_CustomFrame_infoplayer_armor_border:SetTexture("Interface\\AddOns\\RoCUI\\images\\infopanel\\generaliconborder")
+
+	RoCUI_CustomFrame_infoplayer_armor_title = RoCUI_CustomFrame_Base_infoplayer:CreateFontString(nil, "OVERLAY", "RoCUIInfopanelStatNormal")
+    RoCUI_CustomFrame_infoplayer_armor_title:SetPoint("TOPLEFT", RoCUI_FrameWindowName_infoplayer, "TOPLEFT", 100, -170)
+    RoCUI_CustomFrame_infoplayer_armor_title:SetSize(130, 70)
+    RoCUI_CustomFrame_infoplayer_armor_title:SetText("")
+
+
+    ---- stat icon and text
+	RoCUI_CustomFrame_infoplayer_stats_icon = RoCUI_CustomFrame_Base_infoplayer:CreateTexture(nil, "ARTWORK")
+	RoCUI_CustomFrame_infoplayer_stats_icon:SetPoint("TOPRIGHT", RoCUI_FrameWindowName_infoplayer, "TOPRIGHT", -142, -135)
+	RoCUI_CustomFrame_infoplayer_stats_icon:SetSize(50, 50)
+	RoCUI_CustomFrame_infoplayer_stats_icon:SetTexture("Interface\\AddOns\\RoCUI\\images\\infopanel\\placeholder")
+
+	RoCUI_CustomFrame_infoplayer_stats_border = RoCUI_CustomFrame_Base_infoplayer:CreateTexture(nil, "ARTWORK")
+	RoCUI_CustomFrame_infoplayer_stats_border:SetPoint("TOPRIGHT", RoCUI_FrameWindowName_infoplayer, "TOPRIGHT", -142, -135)
+	RoCUI_CustomFrame_infoplayer_stats_border:SetSize(50, 50)
+	RoCUI_CustomFrame_infoplayer_stats_border:SetTexture("Interface\\AddOns\\RoCUI\\images\\infopanel\\generaliconborder")
+
+	RoCUI_CustomFrame_infoplayer_stats_title = RoCUI_CustomFrame_Base_infoplayer:CreateFontString(nil, "OVERLAY", "RoCUIInfopanelStatNormal")
+    RoCUI_CustomFrame_infoplayer_stats_title:SetPoint("TOPRIGHT", RoCUI_FrameWindowName_infoplayer, "TOPRIGHT", -5, -100)
+    RoCUI_CustomFrame_infoplayer_stats_title:SetSize(130, 300)
+    RoCUI_CustomFrame_infoplayer_stats_title:SetText("")
+	
+	
+	---- set layer for each frame
+	RoCUI_CustomFrame_infoplayer_experiencebar_border:SetFrameLevel(2)
+    RoCUI_CustomFrame_infoplayer_experiencebar:SetFrameLevel(1)
+	RoCUI_CustomFrame_infoplayer_weapon_icon:SetDrawLayer("ARTWORK", 1)
+	RoCUI_CustomFrame_infoplayer_weapon_border:SetDrawLayer("ARTWORK", 2)
+	RoCUI_CustomFrame_infoplayer_armor_icon:SetDrawLayer("ARTWORK", 1)
+	RoCUI_CustomFrame_infoplayer_armor_border:SetDrawLayer("ARTWORK", 2)
+	RoCUI_CustomFrame_infoplayer_stats_icon:SetDrawLayer("ARTWORK", 1)
+	RoCUI_CustomFrame_infoplayer_stats_border:SetDrawLayer("ARTWORK", 2)
 end
