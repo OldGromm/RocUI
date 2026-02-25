@@ -63,7 +63,7 @@ RoCUI_Text_Options_AddonMessages_Description = "Check to show chat messages crea
 
 ------ Toggle display
 RoCUI_Text_Options_ToggleDisplay_Title = "Toggle RoCUI Display"
-RoCUI_Text_Options_ToggleDisplay_Description = "Check to show all the frames. Uncheck to hide all the frames.\n(The display can be toggle via a hotkey as well, but has to be manually set first.)"
+RoCUI_Text_Options_ToggleDisplay_Description = "Check to show all the frames. Uncheck to hide all the frames.\n(The display can be toggled via a hotkey as well, but has to be manually set first.)"
 
 ------ Faction skin selection
 RoCUI_Text_Options_Skins_Title = "Faction Skin"
@@ -74,32 +74,35 @@ RoCUI_Text_Options_Skins_Orc = "Orc"
 RoCUI_Text_Options_Skins_NightElf = "Night Elf"
 
 
-
 ---- Inventory
 ------ Slots
 RoCUI_Text_Options_Inventory_ToggleSlots_Title = "Toggle Inventory Slots"
 RoCUI_Text_Options_Inventory_ToggleSlots_Description = "Check to show the inventory slots. Uncheck to show the alterantive cover image instead."
+
 
 ---- Day and Night Cycle Widget
 ------ Sound
 RoCUI_Text_Options_Sundial_Sound_Title = "Toggle Sound"
 RoCUI_Text_Options_Sundial_Sound_Description = "Check to play a sound when it's daytime (6:00 to 18:00 server time) or nightfall (18:00 to 6:00 server time). Uncheck to prevent the sound from playing."
 
+
 ---- Top Menu - Submenu Choices
 RoCUI_Text_Options_TopMenu_SubmenuType_ESC = "Menu"
 RoCUI_Text_Options_TopMenu_SubmenuType_Character = "Character"
 RoCUI_Text_Options_TopMenu_SubmenuType_Professions = "Professions"
 RoCUI_Text_Options_TopMenu_SubmenuType_Spellbook = "Spells"
+RoCUI_Text_Options_TopMenu_SubmenuType_Skills = "Skills"
+RoCUI_Text_Options_TopMenu_SubmenuType_PvP = "PvP"
 RoCUI_Text_Options_TopMenu_SubmenuType_Talents = "Talents"
 RoCUI_Text_Options_TopMenu_SubmenuType_CooldownManager = "Cooldown Manager"
 RoCUI_Text_Options_TopMenu_SubmenuType_CooldownManager_Abbreviated = "CMD"
 RoCUI_Text_Options_TopMenu_SubmenuType_Achievements = "Achievements"
 RoCUI_Text_Options_TopMenu_SubmenuType_Quests = "Quests"
-RoCUI_Text_Options_TopMenu_SubmenuType_Guild = "Clan"
+RoCUI_Text_Options_TopMenu_SubmenuType_Guild = "Guild"
 RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder = "Lobby"
 RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder_PvE = VAS_PVE_PARENTHESES or "(PvE)"
 RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder_PvP = VAS_PVP_PARENTHESES or "(PvP)"
-RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder_MPlus = PLAYER_DIFFICULTY_MYTHIC_PLUS or "Mythic+"
+RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder_MPlus = "Mythic+"
 RoCUI_Text_Options_TopMenu_SubmenuType_Mounts = "Mounts"
 RoCUI_Text_Options_TopMenu_SubmenuType_Pets = "Pets"
 RoCUI_Text_Options_TopMenu_SubmenuType_Toys = "Toys"
@@ -107,12 +110,50 @@ RoCUI_Text_Options_TopMenu_SubmenuType_Heirlooms = "Heirlooms"
 RoCUI_Text_Options_TopMenu_SubmenuType_Appearances = "Appearances"
 RoCUI_Text_Options_TopMenu_SubmenuType_Journal = "Journal"
 RoCUI_Text_Options_TopMenu_SubmenuType_Calendar = "Calendar"
+RoCUI_Text_Options_TopMenu_SubmenuType_Map = "Map"
+RoCUI_Text_Options_TopMenu_SubmenuType_Social = "Social"
+RoCUI_Text_Options_TopMenu_SubmenuType_GreatVault = "Great Vault"
+RoCUI_Text_Options_TopMenu_SubmenuType_GreatVault_Abbreviated = "Vault"
 RoCUI_Text_Options_TopMenu_SubmenuType_Hide = "Hide"
 
----- Portrait (Unit Power Display)
+
+---- Portrait
 RoCUI_Text_Options_Portrait_PowerDisplayType_Title = "Change Power Display Type"
 RoCUI_Text_Options_Portrait_PowerDisplayType_Description = "By default, the add-on will use the primary power resource of any given spec. This option will change it to another resource."
+RoCUI_Text_Options_Portrait_TextFormatting_Health_Title = "Change Health Display"
+RoCUI_Text_Options_Portrait_TextFormatting_Health_Description = "Changes the way the health numbers are being displayed."
+RoCUI_Text_Options_Portrait_TextFormatting_Health_Abbreviate_Title = "Shorter Health Numbers"
+RoCUI_Text_Options_Portrait_TextFormatting_Health_Abbreviate_Description = "Check to abbreviate health numbers so they fit into the textfield better. Uncheck to show the whole numbers."
+RoCUI_Text_Options_Portrait_TextFormatting_Power_Title = "Change Power Display"
+RoCUI_Text_Options_Portrait_TextFormatting_Power_Description = "Changes the way the power numbers are being displayed."
+RoCUI_Text_Options_Portrait_TextFormatting_Power_Abbreviate_Title = "Shorter Power Numbers"
+RoCUI_Text_Options_Portrait_TextFormatting_Power_Abbreviate_Description = "Check to abbreviate power numbers so they fit into the textfield better. Uncheck to show the whole numbers."
+RoCUI_Text_Options_Portrait_TextFormatting_Word_Current = REFORGE_CURRENT or "Current"
+RoCUI_Text_Options_Portrait_TextFormatting_Word_Maximum = MAXIMUM or "Maximum"
+RoCUI_Text_Options_Portrait_TextFormatting_Word_Percentage = STATUS_TEXT_PERCENT or "Percentage"
+RoCUI_Text_Options_Portrait_TextSize_Health_Title = "Change Health Size"
+RoCUI_Text_Options_Portrait_TextSize_Health_Description = "Changes the size of the health text."
+RoCUI_Text_Options_Portrait_TextSize_Power_Title = "Change Power Size"
+RoCUI_Text_Options_Portrait_TextSize_Power_Description = "Changes the size of the health text."
 
+
+---- Infopanel
+RoCUI_Text_Options_Infopanel_CharacterTitle_Title = "Show Title"
+RoCUI_Text_Options_Infopanel_CharacterTitle_Description = "Check to display the player character's title (if one is equipped). Uncheck to always omit it in the info panel."
+RoCUI_Text_Options_Infopanel_ExperienceBarClassName_Title = "Show Spec Name"
+RoCUI_Text_Options_Infopanel_ExperienceBarClassName_Description = "Check to display the specialization name on the experience bar. Uncheck to only display the main class name."
+RoCUI_Text_Options_Infopanel_IconPreference_Title = "Use Warcraft III Icons"
+RoCUI_Text_Options_Infopanel_IconPreference_Description = "Check to use icons from Warcraft III for the infopanel. Uncheck to use the icon of your currently-equipped weapon, chestpiece and class icon instead."
+RoCUI_Text_Options_Infopanel_TextFormatting_Stats_Abbreviate_Title = "Shorter Stat Numbers"
+RoCUI_Text_Options_Infopanel_TextFormatting_Stats_Abbreviate_Description = "Check to abbreviate stat numbers so they fit into the textfield better. Uncheck to show the whole numbers."
+RoCUI_Text_Options_Infopanel_TextFormatting_Stats_Percentage_Title = "Display as Percentage"
+RoCUI_Text_Options_Infopanel_TextFormatting_Stats_Percentage_Description = "Check to display stat numbers as percentage where possible. Uncheck to show the raw numbers."
+RoCUI_Text_Options_Infopanel_StatType_Offensive_Title = "Offensive Type"
+RoCUI_Text_Options_Infopanel_StatType_Offensive_Description = "Select which type of offensive stat to display in the infopanel."
+RoCUI_Text_Options_Infopanel_StatType_Defensive_Title = "Defensive Type"
+RoCUI_Text_Options_Infopanel_StatType_Defensive_Description = "Select which type of defensive stat to display in the infopanel."
+RoCUI_Text_Options_Infopanel_StatType_Other_Title = "Other Type"
+RoCUI_Text_Options_Infopanel_StatType_Other_Description = "Select which type of other stat to display in the infopanel."
 
 ---- Sound Overrides
 RoCUI_Text_Options_SoundOverride_QuestAccepted_Title = "Quest Accepted"
@@ -127,9 +168,12 @@ RoCUI_Text_Options_SoundOverride_Queue_Description = "Check to replace the sound
 
 
 -- Other
-
 ---- Minimap button & compartment button
 RoCUI_Text_Options_Compartment_Title = "RoC UI"
 RoCUI_Text_Options_Compartment_Description = "Click to open the options menu."
 
-RoCUI_Text_CombatWarning = "Cannot perform task - you are in combat."
+---- combat lockdown warning
+RoCUI_Text_CombatWarning_FirstPart = "Cannot change add-on settings: "
+RoCUI_Text_CombatWarning_Type0 = "You are in combat."
+RoCUI_Text_CombatWarning_Type1 = "A mythic+ run is currently in progress."
+RoCUI_Text_CombatWarning_Type2 = "A PvP match is currently in progress."
