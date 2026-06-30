@@ -97,51 +97,51 @@ end
 function RoCUI_ButtonTextUpdate(input_frametype, input_submenutype)
     local RoCUI_Temp_ButtonName = ("RoCUI_CustomFrame_Base_"..input_frametype)
 	if input_submenutype == 1 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_ESC)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_ESC_Abbreviated)
     elseif input_submenutype == 2 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Character)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Character_Abbreviated)
     elseif input_submenutype == 3 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Professions)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Professions_Abbreviated)
     elseif input_submenutype == 4 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Spellbook)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Spellbook_Abbreviated)
     elseif input_submenutype == 5 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Skills)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Skills_Abbreviated)
     elseif input_submenutype == 6 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_PvP)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_PvP_Abbreviated)
     elseif input_submenutype == 7 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Talents)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Talents_Abbreviated)
     elseif input_submenutype == 8 then
         _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_CooldownManager_Abbreviated)
     elseif input_submenutype == 9 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Achievements)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Achievements_Abbreviated)
     elseif input_submenutype == 10 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Quests)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Quests_Abbreviated)
     elseif input_submenutype == 11 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Guild)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Guild_Abbreviated)
     elseif input_submenutype == 12 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder_Abbreviated)
     elseif input_submenutype == 13 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder_PvP_Abbreviated)
     elseif input_submenutype == 14 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder_MPlus_Abbreviated)
     elseif input_submenutype == 15 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Mounts)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Mounts_Abbreviated)
     elseif input_submenutype == 16 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Pets)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Pets_Abbreviated)
     elseif input_submenutype == 17 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Toys)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Toys_Abbreviated)
     elseif input_submenutype == 18 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Heirlooms)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Heirlooms_Abbreviated)
     elseif input_submenutype == 19 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Appearances)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Appearances_Abbreviated)
     elseif input_submenutype == 20 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Journal)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Journal_Abbreviated)
     elseif input_submenutype == 21 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Calendar)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Calendar_Abbreviated)
     elseif input_submenutype == 22 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Map)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Map_Abbreviated)
     elseif input_submenutype == 23 then
-        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Social)
+        _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_Social_Abbreviated)
     elseif input_submenutype == 24 then	
         _G[RoCUI_Temp_ButtonName]:SetText(RoCUI_Text_Options_TopMenu_SubmenuType_GreatVault_Abbreviated)
     elseif input_submenutype == 25 then	

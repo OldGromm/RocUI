@@ -1,7 +1,7 @@
 ## Interface: 11508, 20505, 50504, 120007
 ## Title: RoC UI
 ## Author: OldGromm
-## Version: 1.03
+## Version: 1.04
 ## IconTexture: Interface\Addons\RoCUI\images\other\RoCUI_Icon.blp
 ## Notes: Changes the user interface to resemble Warcraft III.
 ## Category: User Interface
@@ -18,7 +18,5 @@
 ## Category-zhTW: 使用者介面
 ## LoadSavedVariablesFirst: 1
 ## SavedVariablesPerCharacter: RoCUIDB_Options, RoCUIDB_MinimapIcon, RoCUIDB_DayNightCycle
-
-localization\[TextLocale].lua
 
 embeds.xml

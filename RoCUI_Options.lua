@@ -82,10 +82,17 @@ local function OnSettingChanged_TopMenu(setting, value)
 	end
 end
 
+
 ---- sound overrides
 local function OnSettingChanged_SoundOverrides(setting, value)
     RoCUI_SoundReplacements(setting.variable, value)
 end
+
+---- end of battle sounds
+local function OnSettingChanged_EndofBattleSounds(setting, value)
+    RoCUI_EndofBattleSounds(setting.variable, value)
+end
+
 
 ---- portrait
 local function OnSettingChanged_Portrait_Stats(setting, value)
@@ -420,11 +427,11 @@ function RoCUI_CreateOptions_TopMenu_SubmenuType(input_frametype, input_default)
             container:Add(10, RoCUI_Text_Options_TopMenu_SubmenuType_Quests)
             container:Add(11, RoCUI_Text_Options_TopMenu_SubmenuType_Guild)
 			if RoCUI_GameVersion > 1 then
-			    container:Add(12, (RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder.." "..RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder_PvE))
-			    container:Add(13, (RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder.." "..RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder_PvP))
+			    container:Add(12, (RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder.." ("..RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder_PvE..")"))
+			    container:Add(13, (RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder.." ("..RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder_PvP..")"))
 			end
 			if RoCUI_GameVersion == 3 then
-			    container:Add(14, (RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder.." ".."("..RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder_MPlus..")"))
+			    container:Add(14, (RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder.." ("..RoCUI_Text_Options_TopMenu_SubmenuType_GroupFinder_MPlus..")"))
             end
 			if RoCUI_GameVersion > 1 then
 			    container:Add(15, RoCUI_Text_Options_TopMenu_SubmenuType_Mounts)
@@ -481,7 +488,7 @@ end
 
 ---- reset add-on settings
 do
-	local initializer = CreateSettingsButtonInitializer(RoCUI_Text_Options_Reset_Title, RESET, RoCUI_OnButtonClick, RoCUI_Text_Options_Reset_Description, false, newTagID, gameDataFunc)
+	local initializer = CreateSettingsButtonInitializer(RoCUI_Text_Options_Reset_Title, RoCUI_Text_Options_Reset_Button, RoCUI_OnButtonClick, RoCUI_Text_Options_Reset_Description, false, newTagID, gameDataFunc)
 	RoCUI_Options_Layout_Main:AddInitializer(initializer)
 end
 
@@ -537,6 +544,27 @@ do
 
     Settings.CreateDropdown(RoCUI_Options_Category_Sub_general, setting, GetOptions, tooltip)
 	RoCUI_SaveDefaultSetting(variable, variableKey, RoCUI_FactionSkinDefault)
+end
+
+
+---- language
+do
+    local name = RoCUI_Text_Options_Language_Title
+    local variable = "RoCUI_Options_General_Language"
+	local variableKey = "General_Language"
+    local tooltip = RoCUI_Text_Options_Language_Description
+
+    local function GetOptions()
+        local container = Settings.CreateControlTextContainer()
+		    for i, v in ipairs(RoCUI_UserLanguage_Full) do
+                container:Add(i, v)
+			end
+        return container:GetData()
+    end
+
+	local setting = Settings.RegisterAddOnSetting(RoCUI_Options_Category_Sub_general, variable, variableKey, RoCUIDB_Options, Settings.VarType.Number, name, 1)
+
+    Settings.CreateDropdown(RoCUI_Options_Category_Sub_general, setting, GetOptions, tooltip)
 end
 
 
@@ -940,6 +968,32 @@ end
 
 
 
+-- sound channel for custom sounds
+do
+    local name = RoCUI_Text_Options_Sound_Channel_Title
+    local variable = "RoCUI_Options_Sounds_Channel"
+	local variableKey = "Sounds_Channel"
+    local tooltip = RoCUI_Text_Options_Sound_Channel_Description
+
+    local function GetOptions()
+        local container = Settings.CreateControlTextContainer()
+            container:Add(1, RoCUI_Text_Options_Sound_ChannelName_Master)
+            container:Add(2, RoCUI_Text_Options_Sound_ChannelName_Music)
+            container:Add(3, RoCUI_Text_Options_Sound_ChannelName_SXF)
+            container:Add(4, RoCUI_Text_Options_Sound_ChannelName_Ambience)
+            container:Add(5, RoCUI_Text_Options_Sound_ChannelName_Dialog)
+        return container:GetData()
+    end
+
+	local setting = Settings.RegisterAddOnSetting(RoCUI_Options_Category_Sub_sound, variable, variableKey, RoCUIDB_Options, Settings.VarType.Number, name, 1)
+
+    Settings.CreateDropdown(RoCUI_Options_Category_Sub_sound, setting, GetOptions, tooltip)
+	RoCUI_SaveDefaultSetting(variable, variableKey, 1)
+end
+
+
+
+
 -- sound overrides
 for i, v in ipairs(RoCUI_Table_SoundOverrides) do
     local tempname = "RoCUI_Text_Options_SoundOverride_"..v.."_Title"
@@ -954,6 +1008,58 @@ for i, v in ipairs(RoCUI_Table_SoundOverrides) do
 
 	Settings.CreateCheckbox(RoCUI_Options_Category_Sub_sound, setting, tooltip)
 	RoCUI_SaveDefaultSetting(variable, variableKey, true)
+end
+
+
+
+
+-- end of battle sounds
+do
+    local name = RoCUI_Text_Options_Sound_Victory_Title
+    local variable = "RoCUI_Options_Sounds_EndofBattle_Victory"
+	local variableKey = "Sounds_EndofBattle_Victory"
+    local tooltip = RoCUI_Text_Options_Sound_Victory_Description
+
+    local function GetOptions()
+        local container = Settings.CreateControlTextContainer()
+            container:Add(1, RoCUI_Text_Options_EndofBattle_Generic)
+            container:Add(2, RoCUI_Text_Options_Skins_Human)
+            container:Add(3, RoCUI_Text_Options_Skins_Undead)
+            container:Add(4, RoCUI_Text_Options_Skins_Orc)
+            container:Add(5, RoCUI_Text_Options_Skins_NightElf)
+            container:Add(6, RoCUI_Text_Options_EndofBattle_Random)
+			container:Add(7, RoCUI_Text_Options_EndofBattle_None)
+        return container:GetData()
+    end
+
+	local setting = Settings.RegisterAddOnSetting(RoCUI_Options_Category_Sub_sound, variable, variableKey, RoCUIDB_Options, Settings.VarType.Number, name, RoCUI_EndofBattleSoundDefault)
+
+    Settings.CreateDropdown(RoCUI_Options_Category_Sub_sound, setting, GetOptions, tooltip)
+	RoCUI_SaveDefaultSetting(variable, variableKey, RoCUI_EndofBattleSoundDefault)
+end
+
+do
+    local name = RoCUI_Text_Options_Sound_Defeat_Title
+    local variable = "RoCUI_Options_Sounds_EndofBattle_Defeat"
+	local variableKey = "Sounds_EndofBattle_Defeat"
+    local tooltip = RoCUI_Text_Options_Sound_Defeat_Description
+
+    local function GetOptions()
+        local container = Settings.CreateControlTextContainer()
+            container:Add(1, RoCUI_Text_Options_EndofBattle_Generic)
+            container:Add(2, RoCUI_Text_Options_Skins_Human)
+            container:Add(3, RoCUI_Text_Options_Skins_Undead)
+            container:Add(4, RoCUI_Text_Options_Skins_Orc)
+            container:Add(5, RoCUI_Text_Options_Skins_NightElf)
+            container:Add(6, RoCUI_Text_Options_EndofBattle_Random)
+			container:Add(7, RoCUI_Text_Options_EndofBattle_None)
+        return container:GetData()
+    end
+
+	local setting = Settings.RegisterAddOnSetting(RoCUI_Options_Category_Sub_sound, variable, variableKey, RoCUIDB_Options, Settings.VarType.Number, name, RoCUI_EndofBattleSoundDefault)
+
+    Settings.CreateDropdown(RoCUI_Options_Category_Sub_sound, setting, GetOptions, tooltip)
+	RoCUI_SaveDefaultSetting(variable, variableKey, RoCUI_EndofBattleSoundDefault)
 end
 
 

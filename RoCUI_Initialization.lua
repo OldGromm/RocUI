@@ -10,30 +10,49 @@ RoCUI_DefaultDatabase_Values = {}
 
 
 -- setup other variables
+---- general
 RoCUI_Table_SkinNames = {"human", "undead", "orc", "nightelf"}
 RoCUI_Table_StrataNames = {"TOOLTIP", "FULLSCREEN_DIALOG", "FULLSCREEN", "DIALOG", "HIGH", "MEDIUM", "LOW", "BACKGROUND"}
 RoCUI_Table_Options_Frametypes = {"main", "sun", "portraitplayer", "top1", "top2", "top3", "top4", "top5", "top6", "top7", "top8", "infoplayer", "additional1", "additional2", "additional3", "additional4"}
 RoCUI_Table_Options_Frametypes_HideByDefault = {"main", "additional1", "additional2", "additional3", "additional4"}
 RoCUI_Table_Options_Frametypes_UseBackdrop = {"infoplayer", "additional1", "additional2", "additional3", "additional4"}
+
+---- day and night cycle aka sundial
 RoCUI_Table_SecondsUntilReset = {77400, 72000, 66600, 61200, 55800, 50400, 45000, 39600, 34200, 28800, 23400, 18000, 12600, 7200, 1800, 0}
+
+---- infopanel
+RoCUI_Table_TitleBehindName = {}
+RoCUI_Table_TitleBehindNameWithComma = {}
 RoCUI_Table_TopMenuVariableNames = {"top1", "top2", "top3", "top4", "top5", "top6", "top7", "top8"}
 RoCUI_Table_SubitemType_Weapon = { "axe", "axe", "arrow", "gun", "hammer", "hammer", "polearm", "sword", "sword", "glaive", "staff", "claw", "claw", "fist", "sword", "dagger", "dagger", "polearm", "arrow", "staff", "fish"}
 RoCUI_Table_SubitemType_Armor = {"unarmored", "cloth", "leather", "mail", "plate", "unarmored", "shield", "libram", "idol", "totem", "sigil", "relic"}
 RoCUI_Table_SubitemType_Armor_NoQualityVariants = {"unarmored", "libram", "idol", "totem", "sigil", "relic"}
-RoCUI_Table_TitleBehindName = {}
-RoCUI_Table_TitleBehindNameWithComma = {}
 RoCUI_Table_ClassIcons = {626008, 626003, 626000, 626005, 626004, 625998, 626006, 626001, 626007, 626002, 625999, 1260827, 4574311}
 RoCUI_Table_Classic_PrimaryStat = {"stats_str", "stats_str", "stats_agi", "stats_agi", "stats_int", "stats_str", "stats_int", "stats_int", "stats_int", "stats_agi", "stats_int", "stats_agi", "stats_int"}
-RoCUI_NumberofBags = 0
+
+---- sounds
+RoCUI_CustomSound = {}
+RoCUI_CustomSound["QUEST_ACCEPTED"] = "Interface\\AddOns\\RoCUI\\sounds\\quests\\QuestNew.ogg"
+RoCUI_CustomSound["QUEST_TURNED_IN"] = "Interface\\AddOns\\RoCUI\\sounds\\quests\\QuestCompleted.ogg"
+RoCUI_CustomSound["PLAYER_DEAD"] = "Interface\\AddOns\\RoCUI\\sounds\\quests\\QuestFailed.ogg"
+RoCUI_CustomSound["LFG_PROPOSAL_SHOW"] = "Interface\\AddOns\\RoCUI\\sounds\\interface\\GameFound.ogg"
+RoCUI_SoundHandle = {}
+RoCUI_SoundChannel = {"Master", "Music", "SFX", "Ambience", "Dialog"}
+RoCUI_EndofBattleSound_Filename = {"Generic", "Human", "Undead", "Orc", "NightElf", "Random", "None"}
+
+---- language
+RoCUI_UserLanguage_Locale = {"enUS", "deDE"}
+RoCUI_UserLanguage_Full = {"English", "German (Deutsch)"}
 
 
 
 
--- set default skin depending on the player character's race
+-- set default skin, as well as end-of-battle sound, depending on the player character's race
 RoCUI_PlayerLocation = PlayerLocation:CreateFromUnit("player")
 RoCUI_PlayerCharacterRace = C_PlayerInfo.GetRace(RoCUI_PlayerLocation)
 RoCUIDB_Skin = ""
 RoCUI_FactionSkinDefault = 1
+RoCUI_EndofBattleSoundDefault = 2
 
 if RoCUI_PlayerCharacterRace == 1 then --Human
     RoCUIDB_Skin = "Human"
@@ -122,9 +141,9 @@ elseif RoCUI_PlayerCharacterRace == 84 then --EarthenDwarf (Horde)
     RoCUIDB_Skin = "Orc"
 elseif RoCUI_PlayerCharacterRace == 85 then --EarthenDwarf (Alliance)
     RoCUIDB_Skin = "Human"
-elseif RoCUI_PlayerCharacterRace == 86 then --Haranir
+elseif RoCUI_PlayerCharacterRace == 86 then --Haranir (Alliance)
     RoCUIDB_Skin = "Nightelf"
-elseif RoCUI_PlayerCharacterRace == 91 then --Haranir
+elseif RoCUI_PlayerCharacterRace == 91 then --Haranir (Horde)
     RoCUIDB_Skin = "Nightelf"
 elseif RoCUI_PlayerCharacterRace == nil then
     RoCUIDB_Skin = "Human"
@@ -137,12 +156,16 @@ end
 -- determine the default value of the faction skin for the options menu
 if RoCUIDB_Skin == "Human" then
     RoCUI_FactionSkinDefault = 1
+	RoCUI_EndofBattleSoundDefault = 2
 elseif RoCUIDB_Skin == "Undead" then
     RoCUI_FactionSkinDefault = 2
+	RoCUI_EndofBattleSoundDefault = 3
 elseif RoCUIDB_Skin == "Orc" then
     RoCUI_FactionSkinDefault = 3
+	RoCUI_EndofBattleSoundDefault = 4
 elseif RoCUIDB_Skin == "Nightelf" then
     RoCUI_FactionSkinDefault = 4
+	RoCUI_EndofBattleSoundDefault = 5
 else
 end
 
@@ -323,3 +346,38 @@ RoCUI_CustomFrame_Base_inventoryslot5 = {}
 RoCUI_CustomFrame_Texture_inventoryslot5 = {}
 RoCUI_CustomFrame_Base_inventoryslot6 = {}
 RoCUI_CustomFrame_Texture_inventoryslot6 = {}
+
+
+
+
+-- Setup language to use for add-on text
+local RoCUI_Temp_GameClientLocale = GetLocale()
+local RoCUI_Temp_LocaleIsSupported = false
+
+
+---- check if variable is empty
+if RoCUIDB_Options["General_Language"] == nil then
+------ check if the players' client locale is supported.
+    for i, v in ipairs(RoCUI_UserLanguage_Locale) do
+        if RoCUI_Temp_GameClientLocale == v then
+	        RoCUIDB_Options["General_Language"] = i
+		    RoCUI_Temp_LocaleIsSupported = true
+	    end
+    end
+------ if none of the client locales are supported, make English the default.
+	if RoCUI_Temp_LocaleIsSupported == false then
+    RoCUIDB_Options["General_Language"] = 1
+    end
+else
+end
+
+
+---- run a different function depending on the chosen language
+if RoCUIDB_Options["General_Language"] == 1 then
+    RoCUI_LoadLanguage_enUS()
+elseif RoCUIDB_Options["General_Language"] == 2 then
+    RoCUI_LoadLanguage_deDE()
+else
+end
+
+

@@ -1,6 +1,4 @@
 -- event (load all settings, also updating the time of day)
-
-
 RoCUI_Event_UpdateSundial = CreateFrame("Frame")
 RoCUI_Event_UpdateSundial:RegisterEvent("PLAYER_ENTERING_WORLD")
 RoCUI_Event_UpdateSundial:SetScript("OnEvent", function(_, event, isInitialLogin, isReloadingUi)
@@ -96,6 +94,39 @@ RoCUI_Event_Sound_RandomGroupIsReady:SetScript("OnEvent", function(_, event, isR
     RoCUI_SoundPlayer("LFG_PROPOSAL_SHOW")
 end)
 
+-- event (play sound - end of battle - generic)
+RoCUI_Event_Sound_EncounterEnd = CreateFrame("Frame")
+RoCUI_Event_Sound_EncounterEnd:RegisterEvent("ENCOUNTER_END")
+RoCUI_Event_Sound_EncounterEnd:SetScript("OnEvent", function(_, event, _, _, difficultyID, _, success)
+
+    if difficultyID == 8 then
+
+    else
+        if success == 1 then
+            if RoCUIDB_Options["Sounds_EndofBattle_Victory"] < 7 then
+                RoCUI_EndofBattleSounds("Victory")
+				RoCUI_SoundPlayer("Victory")
+            end
+        elseif success == 0 then
+            if RoCUIDB_Options["Sounds_EndofBattle_Defeat"] < 7 then
+                RoCUI_EndofBattleSounds("Defeat")
+				RoCUI_SoundPlayer("Defeat")
+            end
+        else
+        end
+    end
+
+end)
+
+-- event (play sound - end of battle - mythic+)
+RoCUI_Event_Sound_EncounterEnd = CreateFrame("Frame")
+RoCUI_Event_Sound_EncounterEnd:RegisterEvent("CHALLENGE_MODE_COMPLETED")
+RoCUI_Event_Sound_EncounterEnd:SetScript("OnEvent", function(_, event)
+	if RoCUIDB_Options["Sounds_EndofBattle_Victory"] < 7 then
+	    RoCUI_EndofBattleSounds("Victory")
+		RoCUI_SoundPlayer("Victory")
+	end
+end)
 
 
 
