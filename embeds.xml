@@ -1,27 +1,51 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
-<Script file="libraries\LibDBIcon-1.0\LibDBIcon-1.0.lua"/>
 <Script file="libraries\LibStub\LibStub.lua"/>
 <Script file="libraries\CallbackHandler-1.0\CallbackHandler-1.0.lua"/>
 <Script file="libraries\LibDataBroker-1.1\LibDataBroker-1.1.lua"/>
-<Include file="RoCUI_CustomStyles.xml"/>
-<Script file="RoCUI_Initialization.lua"/>
-<Script file="RoCUI_Classic.lua"/>
-<Script file="RoCUI_CombatLockdown.lua"/>
-<Script file="RoCUI_BackdropInfos.lua"/>
-<Script file="RoCUI_TopMenues.lua"/>
-<Script file="RoCUI_DefaultValues.lua"/>
-<Script file="RoCUI_Functions.lua"/>
-<Script file="RoCUI_CreateFrames.lua"/>
-<Script file="RoCUI_PortraitFrame.lua"/>
-<Script file="RoCUI_InfopanelFrame.lua"/>
-<Script file="RoCUI_InfopanelStats.lua"/>
-<Script file="RoCUI_TimeOfDay.lua"/>
-<Script file="RoCUI_MinimapButton.lua"/>
-<Script file="RoCUI_SoundOverrides.lua"/>
-<Script file="RoCUI_Options.lua"/>
-<Script file="RoCUI_Other.lua"/>
-<Script file="RoCUI_LoadSettings.lua"/>
-<Script file="RoCUI_Events.lua"/>
+<Script file="libraries\LibDBIcon-1.0\LibDBIcon-1.0.lua"/>
+<Script file="libraries\LibEditMode\namespaced.lua"/>
+<Include file="libraries\LibEditMode\embed.xml"/>
+
+<Script file="localization\enUS.lua"/>
+<Script file="localization\deDE.lua"/>
+
+<Script file="database\RoCUI_Database_GlobalVariables.lua"/>
+<Script file="database\RoCUI_Database_DefaultProfile.lua"/>
+<Script file="database\RoCUI_Database_FrameDefaults.lua"/>
+<Script file="database\RoCUI_Database_FactionSkin.lua"/>
+<Script file="database\RoCUI_Database_ClassicPrimaryStats.lua"/>
+<Script file="database\RoCUI_Database_PowerTypes.lua"/>
+<Script file="database\RoCUI_Database_Abbreviations.lua"/>
+<Script file="database\RoCUI_Database_Locales.lua"/>
+<Include file="database\RoCUI_Database_CustomStyles.xml"/>
+
+<Script file="functions\RoCUI_Functions_Profiles.lua"/>
+<Script file="functions\RoCUI_Functions_General.lua"/>
+<Script file="functions\RoCUI_Functions_Backdrop.lua"/>
+<Script file="functions\RoCUI_Functions_TopMenuButtons.lua"/>
+<Script file="functions\RoCUI_Functions_CombatLockdown.lua"/>
+<Script file="functions\RoCUI_Functions_Frames.lua"/>
+<Script file="functions\RoCUI_Functions_FactionSkins.lua"/>
+<Script file="functions\RoCUI_Functions_Infopanel.lua"/>
+<Script file="functions\RoCUI_Functions_Language.lua"/>
+<Script file="functions\RoCUI_Functions_Portrait.lua"/>
+<Script file="functions\RoCUI_Functions_Profiles.lua"/>
+<Script file="functions\RoCUI_Functions_Sounds.lua"/>
+<Script file="functions\RoCUI_Functions_Sundial.lua"/>
+<Script file="functions\RoCUI_Functions_UnitStats.lua"/>
+<Script file="functions\RoCUI_Functions_Setup.lua"/>
+
+<Script file="frames\RoCUI_Frames_CombatLockdown.lua"/>
+<Script file="frames\RoCUI_Frames_OptionsMenu.lua"/>
+<Script file="frames\RoCUI_Frames_EditMode.lua"/>
+
+<Script file="other\RoCUI_Other_MinimapButton.lua"/>
+<Script file="other\RoCUI_Other_Compartment.lua"/>
+<Script file="other\RoCUI_Other_ShashCommands.lua"/>
+
+<Script file="main\RoCUI_Main_Events.lua"/>
+<Script file="main\RoCUI_Main_Initialization.lua"/>
+
 </Ui>

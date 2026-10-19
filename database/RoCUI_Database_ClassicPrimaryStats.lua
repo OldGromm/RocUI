@@ -1,0 +1,15 @@
+RoCUI_Database_ClassicPrimaryStats = {
+{ ["ClassID"] = 1, ["Stat"] = 1 },
+{ ["ClassID"] = 2, ["Stat"] = 1 },
+{ ["ClassID"] = 3, ["Stat"] = 2 },
+{ ["ClassID"] = 4, ["Stat"] = 2 },
+{ ["ClassID"] = 5, ["Stat"] = 4 },
+{ ["ClassID"] = 6, ["Stat"] = 1 },
+{ ["ClassID"] = 7, ["Stat"] = 4 },
+{ ["ClassID"] = 8, ["Stat"] = 4 },
+{ ["ClassID"] = 9, ["Stat"] = 4 },
+{ ["ClassID"] = 10, ["Stat"] = 1 },
+{ ["ClassID"] = 11, ["Stat"] = 4 },
+{ ["ClassID"] = 12, ["Stat"] = 2 },
+{ ["ClassID"] = 13, ["Stat"] = 4 },
+}
